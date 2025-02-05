@@ -1,0 +1,97 @@
+---
+title: Linux服务器基础设置
+tags:
+  - Linux
+  - 端口
+  - 免密登录
+categories:
+  - server
+---
+
+### 设置端口允许IP访问
+```
+#允许IP 104.168.76.12 访问 9529 端口
+firewall-cmd --permanent --add-rich-rule="rule family="ipv4" source address="104.168.76.12" port protocol="tcp" port="9529" accept"
+#重新载入一下防火墙设置，使设置生效
+firewall-cmd --reload
+#查看已设置规则
+firewall-cmd --zone=public --list-rich-rules
+```
+
+### 免密登录
+##### 生成密钥
+
+```
+ssh-keygen -t rsa
+```
+
+##### 复制到Linux服务器
+
+```
+type id_rsa.pub | ssh root@远程服务器 "cat >> .ssh/authorized_keys"
+```
+
+##### 复制公钥到指定服务器
+可以直接将本地公钥复制到指定服务器
+```
+ssh-copy-id root@vps-ubuntu
+```
+
+##### 端口占用查询
+
+查看所有的服务端口（LISTEN，ESTABLISHED）
+```
+netstat -ap
+```
+
+查看指定端口，可以结合grep命令：
+```
+netstat -ap | grep 8080
+```
+
+也可以使用lsof命令：
+```
+lsof -i:8888
+```
+
+若要关闭使用这个端口的程序，使用kill + 对应的pid
+```
+kill -9 PID
+```
+
+##### ubuntu安装apache2,java
+下载
+```
+wget https://dlcdn.apache.org/maven/maven-3/3.9.5/binaries/apache-maven-3.9.5-bin.tar.gz
+```
+
+解压
+```
+tar xzvf apache-maven-3.9.5-bin.tar.gz
+```
+
+添加到Path
+```
+Add the bin directory of the created directory apache-maven-3.9.5 to the PATH environment variable
+Confirm with mvn -v in a new shell. The result should look similar to
+```
+或者直接使用路径
+```
+/path/maven/apache-maven-3.9.5/bin/mvn -v
+```
+
+##### 安装JDK17
+下载
+```
+wget https://download.oracle.com/java/17/archive/jdk-17.0.9_linux-x64_bin.deb
+```
+
+安装
+```
+dpkg -i jdk-17.0.9_linux-x64_bin.deb
+```
+
+验证
+```
+javac & java -version
+```
