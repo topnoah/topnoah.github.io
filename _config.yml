@@ -102,5 +102,14 @@ theme: landscape
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: 'git'
-  repo: 'https://github.com/topnoah/topnoah.github.io'
+  repo: 'git@github.com:topnoah/topnoah.github.io.git'
   branch: 'gh-pages'
+suka_theme:
+  search:
+    enable: true
+    path: search.json
+    field: post # Page | Post | All. Default post
+  prism:
+    enable: false
+    line_number: true
+    theme: default
