@@ -3,18 +3,21 @@
   <entry>
     <title>ubuntu(debain) Apache2多端口部署</title>
     <url>/2025/02/06/linux%E5%AE%89%E8%A3%85apache2/</url>
-    <content><![CDATA[<h3 id="Linux-Apache2多端口部署"><a href="#Linux-Apache2多端口部署" class="headerlink" title="Linux Apache2多端口部署"></a>Linux Apache2多端口部署</h3><h4 id="1-安装Apache2"><a href="#1-安装Apache2" class="headerlink" title="1 安装Apache2"></a>1 安装Apache2</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install apache2</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<p>Linux Apache2多端口部署</p>
+<span id="more"></span>
 
-<h4 id="2-找到ports-conf文件"><a href="#2-找到ports-conf文件" class="headerlink" title="2 找到ports.conf文件"></a>2 找到ports.conf文件</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/apache2</span><br><span class="line"><span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
+<h3 id="Linux-Apache2多端口部署"><a href="#Linux-Apache2多端口部署" class="headerlink" title="Linux Apache2多端口部署"></a>Linux Apache2多端口部署</h3><h4 id="安装Apache2"><a href="#安装Apache2" class="headerlink" title="安装Apache2"></a>安装Apache2</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install apache2</span><br></pre></td></tr></table></figure>
+
+<h4 id="找到ports-conf文件"><a href="#找到ports-conf文件" class="headerlink" title="找到ports.conf文件"></a>找到ports.conf文件</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/apache2</span><br><span class="line"><span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@nine:~# <span class="built_in">cd</span> /etc/apache2/</span><br><span class="line">root@nine:/etc/apache2# <span class="built_in">ls</span></span><br><span class="line">apache2.conf    conf-enabled  magic           mods-enabled  sites-available</span><br><span class="line">conf-available  envvars       mods-available  ports.conf    sites-enabled</span><br></pre></td></tr></table></figure>
 
-<h4 id="3-编辑ports-conf文件"><a href="#3-编辑ports-conf文件" class="headerlink" title="3 编辑ports.conf文件"></a>3 编辑ports.conf文件</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim ports.conf</span><br></pre></td></tr></table></figure>
+<h4 id="编辑ports-conf文件"><a href="#编辑ports-conf文件" class="headerlink" title="编辑ports.conf文件"></a>编辑ports.conf文件</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim ports.conf</span><br></pre></td></tr></table></figure>
 
-<h4 id="4-添加端口，如下"><a href="#4-添加端口，如下" class="headerlink" title="4 添加端口，如下"></a>4 添加端口，如下</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># If you just change the port or add more ports here, you will likely also</span></span><br><span class="line"><span class="comment"># have to change the VirtualHost statement in</span></span><br><span class="line"><span class="comment"># /etc/apache2/sites-enabled/000-default.conf</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sports-memory</span></span><br><span class="line">Listen 23106</span><br><span class="line"><span class="comment"># blog</span></span><br><span class="line">Listen 23107</span><br><span class="line"><span class="comment"># wprdpress</span></span><br><span class="line">Listen 23108</span><br><span class="line"></span><br><span class="line">&lt;IfModule ssl_module&gt;</span><br><span class="line">        Listen 443</span><br><span class="line">&lt;/IfModule&gt;</span><br><span class="line"></span><br><span class="line">&lt;IfModule mod_gnutls.c&gt;</span><br><span class="line">        Listen 443</span><br><span class="line">&lt;/IfModule&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># vim: syntax=apache ts=4 sw=4 sts=4 sr noet</span></span><br><span class="line">~                                                                                                           ~     </span><br></pre></td></tr></table></figure>
+<h4 id="添加端口，如下"><a href="#添加端口，如下" class="headerlink" title="添加端口，如下"></a>添加端口，如下</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># If you just change the port or add more ports here, you will likely also</span></span><br><span class="line"><span class="comment"># have to change the VirtualHost statement in</span></span><br><span class="line"><span class="comment"># /etc/apache2/sites-enabled/000-default.conf</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sports-memory</span></span><br><span class="line">Listen 23106</span><br><span class="line"><span class="comment"># blog</span></span><br><span class="line">Listen 23107</span><br><span class="line"><span class="comment"># wprdpress</span></span><br><span class="line">Listen 23108</span><br><span class="line"></span><br><span class="line">&lt;IfModule ssl_module&gt;</span><br><span class="line">        Listen 443</span><br><span class="line">&lt;/IfModule&gt;</span><br><span class="line"></span><br><span class="line">&lt;IfModule mod_gnutls.c&gt;</span><br><span class="line">        Listen 443</span><br><span class="line">&lt;/IfModule&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># vim: syntax=apache ts=4 sw=4 sts=4 sr noet</span></span><br><span class="line">~                                                                                                           ~     </span><br></pre></td></tr></table></figure>
 
 <p>添加后，保存退出（<code>:wq</code>）</p>
-<h4 id="5-添加站点（sites-available）"><a href="#5-添加站点（sites-available）" class="headerlink" title="5 添加站点（sites.available）"></a>5 添加站点（sites.available）</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> sites-available/</span><br></pre></td></tr></table></figure>
+<h4 id="添加站点（sites-available）"><a href="#添加站点（sites-available）" class="headerlink" title="添加站点（sites.available）"></a>添加站点（sites.available）</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> sites-available/</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@nine:/etc/apache2# <span class="built_in">cd</span> sites-available/</span><br><span class="line">root@nine:/etc/apache2/sites-available# <span class="built_in">ls</span></span><br><span class="line">000-default.conf  default-ssl.conf</span><br></pre></td></tr></table></figure>
 
@@ -23,11 +26,10 @@
 
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;VirtualHost *:23106&gt;</span><br><span class="line">        ServerAdmin webmaster@localhost</span><br><span class="line">        DocumentRoot /var/www/html</span><br><span class="line">        ErrorLog <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/error.log</span><br><span class="line">        CustomLog <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/access.log combined</span><br><span class="line">&lt;/VirtualHost&gt;</span><br><span class="line"></span><br><span class="line">&lt;VirtualHost *:23107&gt;</span><br><span class="line">        ServerAdmin webmaster2@localhost</span><br><span class="line">        DocumentRoot /var/www/blog/dist</span><br><span class="line">        ErrorLog <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/error.log</span><br><span class="line">        CustomLog <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/access.log combined</span><br><span class="line">&lt;/VirtualHost&gt;</span><br><span class="line"></span><br><span class="line">&lt;VirtualHost *:23108&gt;</span><br><span class="line">        ServerAdmin webmaster3@localhost</span><br><span class="line">        DocumentRoot /var/www/wordpress</span><br><span class="line">        ErrorLog <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/error.log</span><br><span class="line">        CustomLog <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/access.log combined</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
 <p>编辑完成后，保存退出（<code>:wq</code>）</p>
-<h4 id="6-重启Apache2服务"><a href="#6-重启Apache2服务" class="headerlink" title="6 重启Apache2服务"></a>6 重启Apache2服务</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl restart apache2</span><br></pre></td></tr></table></figure>
+<h4 id="重启Apache2服务"><a href="#重启Apache2服务" class="headerlink" title="重启Apache2服务"></a>重启Apache2服务</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl restart apache2</span><br></pre></td></tr></table></figure>
 
-<h4 id="7-卸载apache2"><a href="#7-卸载apache2" class="headerlink" title="7 卸载apache2"></a>7 卸载apache2</h4><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">apt <span class="built_in">remove</span> apache2</span><br></pre></td></tr></table></figure>
-<pre><code>
-</code></pre>
+<h4 id="卸载apache2"><a href="#卸载apache2" class="headerlink" title="卸载apache2"></a>卸载apache2</h4><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">apt <span class="built_in">remove</span> apache2</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>服务器部署</category>
@@ -40,7 +42,9 @@
   <entry>
     <title>Ubuntu安装Docker和docker-compose</title>
     <url>/2025/02/06/linux%E5%AE%89%E8%A3%85docker%E5%92%8Cdocker-compose/</url>
-    <content><![CDATA[<p>在 Ubuntu 上安装 Docker 和 Docker Compose，卸载Docker 和 Docker Compose，按照以下步骤进行操作：</p>
+    <content><![CDATA[<p>在 Ubuntu 上安装 Docker 和 Docker Compose，卸载Docker 和 Docker Compose</p>
+<span id="more"></span>
+
 <h3 id="安装-Docker"><a href="#安装-Docker" class="headerlink" title="安装 Docker"></a>安装 Docker</h3><ol>
 <li>更新系统软件包列表：</li>
 </ol>
@@ -126,7 +130,7 @@
 <p>这就卸载了 Docker Compose</p>
 ]]></content>
       <categories>
-        <category>server</category>
+        <category>服务器部署</category>
       </categories>
       <tags>
         <tag>Linux</tag>
@@ -136,11 +140,16 @@
   <entry>
     <title>Linux服务器基础设置</title>
     <url>/2025/02/06/linux%E9%83%A8%E7%BD%B2%E7%9B%B8%E5%85%B3/</url>
-    <content><![CDATA[<h3 id="设置端口允许IP访问"><a href="#设置端口允许IP访问" class="headerlink" title="设置端口允许IP访问"></a>设置端口允许IP访问</h3><figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line"><span class="comment">#允许IP 104.168.76.12 访问 9529 端口</span></span><br><span class="line">firewall-cmd <span class="params">--permanent</span> <span class="params">--add-rich-rule=</span><span class="string">&quot;rule family=&quot;</span>ipv4<span class="string">&quot; source address=&quot;</span>104.168.76.12<span class="string">&quot; port protocol=&quot;</span>tcp<span class="string">&quot; port=&quot;</span>9529<span class="string">&quot; accept&quot;</span></span><br><span class="line"><span class="comment">#重新载入一下防火墙设置，使设置生效</span></span><br><span class="line">firewall-cmd <span class="params">--reload</span></span><br><span class="line"><span class="comment">#查看已设置规则</span></span><br><span class="line">firewall-cmd <span class="params">--zone=public</span> <span class="params">--list-rich-rules</span></span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<p>设置端口允许IP访问<br>免密登录<br>端口占用查询</p>
+<span id="more"></span>
 
-<h3 id="免密登录"><a href="#免密登录" class="headerlink" title="免密登录"></a>免密登录</h3><h5 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h5><figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">ssh-keygen -t rsa</span></span><br></pre></td></tr></table></figure>
+<h3 id="设置端口允许IP访问"><a href="#设置端口允许IP访问" class="headerlink" title="设置端口允许IP访问"></a>设置端口允许IP访问</h3><figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line"><span class="comment">#允许IP 104.168.76.12 访问 9529 端口</span></span><br><span class="line">firewall-cmd <span class="params">--permanent</span> <span class="params">--add-rich-rule=</span><span class="string">&quot;rule family=&quot;</span>ipv4<span class="string">&quot; source address=&quot;</span>104.168.76.12<span class="string">&quot; port protocol=&quot;</span>tcp<span class="string">&quot; port=&quot;</span>9529<span class="string">&quot; accept&quot;</span></span><br><span class="line"><span class="comment">#重新载入一下防火墙设置，使设置生效</span></span><br><span class="line">firewall-cmd <span class="params">--reload</span></span><br><span class="line"><span class="comment">#查看已设置规则</span></span><br><span class="line">firewall-cmd <span class="params">--zone=public</span> <span class="params">--list-rich-rules</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="免密登录"><a href="#免密登录" class="headerlink" title="免密登录"></a>免密登录</h3><h5 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h5><figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C topnoah@gmail.<span class="keyword">com</span><span class="comment">&quot;</span></span><br></pre></td></tr></table></figure>
 
 <h5 id="复制到Linux服务器"><a href="#复制到Linux服务器" class="headerlink" title="复制到Linux服务器"></a>复制到Linux服务器</h5><figure class="highlight ada"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="type">id_rsa.pub </span>| ssh root@远程服务器 <span class="string">&quot;cat &gt;&gt; .ssh/authorized_keys&quot;</span></span><br></pre></td></tr></table></figure>
+
+<!-- more -->
 
 <h5 id="复制公钥到指定服务器"><a href="#复制公钥到指定服务器" class="headerlink" title="复制公钥到指定服务器"></a>复制公钥到指定服务器</h5><p>可以直接将本地公钥复制到指定服务器</p>
 <figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">ssh-<span class="keyword">copy</span>-<span class="built_in">id</span> root@vps-ubuntu</span><br></pre></td></tr></table></figure>
@@ -175,9 +184,11 @@
 <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">dpkg</span> -i jdk-<span class="number">17</span>.<span class="number">0</span>.<span class="number">9</span>_linux-x64_bin.deb</span><br></pre></td></tr></table></figure>
 
 <p>验证</p>
-<figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">javac </span>&amp; <span class="keyword">java </span>-version</span><br></pre></td></tr></table></figure>]]></content>
+<figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">javac </span>&amp; <span class="keyword">java </span>-version</span><br></pre></td></tr></table></figure>
+
+<!-- more -->]]></content>
       <categories>
-        <category>server</category>
+        <category>服务器部署</category>
       </categories>
       <tags>
         <tag>Linux</tag>
