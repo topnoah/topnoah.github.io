@@ -931,3 +931,6 @@ css: css
 js: js
 images: images
 
+# 设置为true
+canvas_nest: true
+
