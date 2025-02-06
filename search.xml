@@ -25,7 +25,7 @@
 <p>编辑完成后，保存退出（<code>:wq</code>）</p>
 <h4 id="6，重启Apache2服务"><a href="#6，重启Apache2服务" class="headerlink" title="6，重启Apache2服务"></a>6，重启Apache2服务</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl restart apache2</span><br></pre></td></tr></table></figure>
 
-<h4 id="7-卸载apache2"><a href="#7-卸载apache2" class="headerlink" title="7. 卸载apache2"></a>7. 卸载apache2</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt remove apache2</span><br></pre></td></tr></table></figure>
+<h4 id="7-卸载apache2"><a href="#7-卸载apache2" class="headerlink" title="7. 卸载apache2"></a>7. 卸载apache2</h4><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">apt <span class="built_in">remove</span> apache2</span><br></pre></td></tr></table></figure>
 <pre><code>
 </code></pre>
 ]]></content>
@@ -35,58 +35,6 @@
       <tags>
         <tag>Linux</tag>
         <tag>Apache2</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux服务器基础设置</title>
-    <url>/2025/02/06/linux%E9%83%A8%E7%BD%B2%E7%9B%B8%E5%85%B3/</url>
-    <content><![CDATA[<h3 id="设置端口允许IP访问"><a href="#设置端口允许IP访问" class="headerlink" title="设置端口允许IP访问"></a>设置端口允许IP访问</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#允许IP 104.168.76.12 访问 9529 端口</span><br><span class="line">firewall-cmd --permanent --add-rich-rule=&quot;rule family=&quot;ipv4&quot; source address=&quot;104.168.76.12&quot; port protocol=&quot;tcp&quot; port=&quot;9529&quot; accept&quot;</span><br><span class="line">#重新载入一下防火墙设置，使设置生效</span><br><span class="line">firewall-cmd --reload</span><br><span class="line">#查看已设置规则</span><br><span class="line">firewall-cmd --zone=public --list-rich-rules</span><br></pre></td></tr></table></figure>
-
-<h3 id="免密登录"><a href="#免密登录" class="headerlink" title="免密登录"></a>免密登录</h3><h5 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
-
-<h5 id="复制到Linux服务器"><a href="#复制到Linux服务器" class="headerlink" title="复制到Linux服务器"></a>复制到Linux服务器</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">type id_rsa.pub | ssh root@远程服务器 &quot;cat &gt;&gt; .ssh/authorized_keys&quot;</span><br></pre></td></tr></table></figure>
-
-<h5 id="复制公钥到指定服务器"><a href="#复制公钥到指定服务器" class="headerlink" title="复制公钥到指定服务器"></a>复制公钥到指定服务器</h5><p>可以直接将本地公钥复制到指定服务器</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh-copy-id root@vps-ubuntu</span><br></pre></td></tr></table></figure>
-
-<h5 id="端口占用查询"><a href="#端口占用查询" class="headerlink" title="端口占用查询"></a>端口占用查询</h5><p>查看所有的服务端口（LISTEN，ESTABLISHED）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">netstat -ap</span><br></pre></td></tr></table></figure>
-
-<p>查看指定端口，可以结合grep命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">netstat -ap | grep 8080</span><br></pre></td></tr></table></figure>
-
-<p>也可以使用lsof命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">lsof -i:8888</span><br></pre></td></tr></table></figure>
-
-<p>若要关闭使用这个端口的程序，使用kill + 对应的pid</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kill -9 PID</span><br></pre></td></tr></table></figure>
-
-<h5 id="ubuntu安装apache2-java"><a href="#ubuntu安装apache2-java" class="headerlink" title="ubuntu安装apache2,java"></a>ubuntu安装apache2,java</h5><p>下载</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://dlcdn.apache.org/maven/maven-3/3.9.5/binaries/apache-maven-3.9.5-bin.tar.gz</span><br></pre></td></tr></table></figure>
-
-<p>解压</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tar xzvf apache-maven-3.9.5-bin.tar.gz</span><br></pre></td></tr></table></figure>
-
-<p>添加到Path</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Add the bin directory of the created directory apache-maven-3.9.5 to the PATH environment variable</span><br><span class="line">Confirm with mvn -v in a new shell. The result should look similar to</span><br></pre></td></tr></table></figure>
-<p>或者直接使用路径</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/path/maven/apache-maven-3.9.5/bin/mvn -v</span><br></pre></td></tr></table></figure>
-
-<h5 id="安装JDK17"><a href="#安装JDK17" class="headerlink" title="安装JDK17"></a>安装JDK17</h5><p>下载</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://download.oracle.com/java/17/archive/jdk-17.0.9_linux-x64_bin.deb</span><br></pre></td></tr></table></figure>
-
-<p>安装</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dpkg -i jdk-17.0.9_linux-x64_bin.deb</span><br></pre></td></tr></table></figure>
-
-<p>验证</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">javac &amp; java -version</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>server</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>端口</tag>
-        <tag>免密登录</tag>
       </tags>
   </entry>
   <entry>
@@ -135,22 +83,22 @@
 <h3 id="卸载Docker"><a href="#卸载Docker" class="headerlink" title="卸载Docker"></a>卸载Docker</h3><p>要完全卸载Ubuntu上的Docker，执行以下步骤：</p>
 <ol>
 <li><p>停止所有正在运行的Docker容器。可以使用以下命令停止所有容器：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo docker stop $(sudo docker ps -a -q)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> docker stop $(<span class="built_in">sudo</span> docker ps -a -q)</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>删除所有Docker容器。运行以下命令删除所有容器：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo docker rm $(sudo docker ps -a -q)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> docker <span class="built_in">rm</span> $(<span class="built_in">sudo</span> docker ps -a -q)</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>停止Docker服务。使用以下命令停止Docker服务：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo systemctl stop docker</span><br></pre></td></tr></table></figure>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line">sudo systemctl stop docker</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>卸载Docker软件包。运行以下命令卸载Docker软件包：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt-get purge docker-ce docker-ce-cli containerd.io</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> purge docker-<span class="keyword">ce</span> docker-<span class="keyword">ce</span>-cli containerd.io</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>删除Docker相关的配置和数据。使用以下命令删除Docker的配置和数据：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo rm -rf /var/lib/docker</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">rm</span> -rf /var/lib/docker</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>删除Docker用户组。运行以下命令删除Docker用户组：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo groupdel docker</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> groupdel docker</span><br></pre></td></tr></table></figure></li>
 </ol>
 <p>完成以上步骤后，您的系统将不再具有Docker相关的组件和配置。请注意，这将删除所有Docker容器、镜像和数据，因此请确保您已备份重要的数据。</p>
 <h3 id="安装-Docker-Compose"><a href="#安装-Docker-Compose" class="headerlink" title="安装 Docker Compose"></a>安装 Docker Compose</h3><ol>
@@ -183,6 +131,58 @@
       <tags>
         <tag>Linux</tag>
         <tag>Ubuntu</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux服务器基础设置</title>
+    <url>/2025/02/06/linux%E9%83%A8%E7%BD%B2%E7%9B%B8%E5%85%B3/</url>
+    <content><![CDATA[<h3 id="设置端口允许IP访问"><a href="#设置端口允许IP访问" class="headerlink" title="设置端口允许IP访问"></a>设置端口允许IP访问</h3><figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line"><span class="comment">#允许IP 104.168.76.12 访问 9529 端口</span></span><br><span class="line">firewall-cmd <span class="params">--permanent</span> <span class="params">--add-rich-rule=</span><span class="string">&quot;rule family=&quot;</span>ipv4<span class="string">&quot; source address=&quot;</span>104.168.76.12<span class="string">&quot; port protocol=&quot;</span>tcp<span class="string">&quot; port=&quot;</span>9529<span class="string">&quot; accept&quot;</span></span><br><span class="line"><span class="comment">#重新载入一下防火墙设置，使设置生效</span></span><br><span class="line">firewall-cmd <span class="params">--reload</span></span><br><span class="line"><span class="comment">#查看已设置规则</span></span><br><span class="line">firewall-cmd <span class="params">--zone=public</span> <span class="params">--list-rich-rules</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="免密登录"><a href="#免密登录" class="headerlink" title="免密登录"></a>免密登录</h3><h5 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h5><figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">ssh-keygen -t rsa</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="复制到Linux服务器"><a href="#复制到Linux服务器" class="headerlink" title="复制到Linux服务器"></a>复制到Linux服务器</h5><figure class="highlight ada"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="type">id_rsa.pub </span>| ssh root@远程服务器 <span class="string">&quot;cat &gt;&gt; .ssh/authorized_keys&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="复制公钥到指定服务器"><a href="#复制公钥到指定服务器" class="headerlink" title="复制公钥到指定服务器"></a>复制公钥到指定服务器</h5><p>可以直接将本地公钥复制到指定服务器</p>
+<figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">ssh-<span class="keyword">copy</span>-<span class="built_in">id</span> root@vps-ubuntu</span><br></pre></td></tr></table></figure>
+
+<h5 id="端口占用查询"><a href="#端口占用查询" class="headerlink" title="端口占用查询"></a>端口占用查询</h5><p>查看所有的服务端口（LISTEN，ESTABLISHED）</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">netstat -ap</span></span><br></pre></td></tr></table></figure>
+
+<p>查看指定端口，可以结合grep命令：</p>
+<figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line">netstat <span class="punctuation">-</span>ap <span class="string">| grep 8080</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以使用lsof命令：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">lsof</span> -i:<span class="number">8888</span></span><br></pre></td></tr></table></figure>
+
+<p>若要关闭使用这个端口的程序，使用kill + 对应的pid</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">kill</span> -<span class="number">9</span> PID</span><br></pre></td></tr></table></figure>
+
+<h5 id="ubuntu安装apache2-java"><a href="#ubuntu安装apache2-java" class="headerlink" title="ubuntu安装apache2,java"></a>ubuntu安装apache2,java</h5><p>下载</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">wget</span> https://dlcdn.apache.org/maven/maven-<span class="number">3</span>/<span class="number">3</span>.<span class="number">9</span>.<span class="number">5</span>/binaries/apache-maven-<span class="number">3</span>.<span class="number">9</span>.<span class="number">5</span>-bin.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>解压</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">tar</span> xzvf apache-maven-<span class="number">3</span>.<span class="number">9</span>.<span class="number">5</span>-bin.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>添加到Path</p>
+<figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line">Add <span class="keyword">the</span> bin <span class="built_in">directory</span> <span class="keyword">of</span> <span class="keyword">the</span> created <span class="built_in">directory</span> apache-maven<span class="number">-3.9</span><span class="number">.5</span> <span class="built_in">to</span> <span class="keyword">the</span> PATH environment <span class="built_in">variable</span></span><br><span class="line">Confirm <span class="keyword">with</span> mvn -v <span class="keyword">in</span> <span class="keyword">a</span> <span class="built_in">new</span> <span class="built_in">shell</span>. The <span class="built_in">result</span> should look similar <span class="built_in">to</span></span><br></pre></td></tr></table></figure>
+<p>或者直接使用路径</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="regexp">/path/m</span>aven<span class="regexp">/apache-maven-3.9.5/</span>bin/mvn -v</span><br></pre></td></tr></table></figure>
+
+<h5 id="安装JDK17"><a href="#安装JDK17" class="headerlink" title="安装JDK17"></a>安装JDK17</h5><p>下载</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">wget</span> https://download.oracle.com/java/<span class="number">17</span>/archive/jdk-<span class="number">17</span>.<span class="number">0</span>.<span class="number">9</span>_linux-x64_bin.deb</span><br></pre></td></tr></table></figure>
+
+<p>安装</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">dpkg</span> -i jdk-<span class="number">17</span>.<span class="number">0</span>.<span class="number">9</span>_linux-x64_bin.deb</span><br></pre></td></tr></table></figure>
+
+<p>验证</p>
+<figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">javac </span>&amp; <span class="keyword">java </span>-version</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>server</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>端口</tag>
+        <tag>免密登录</tag>
       </tags>
   </entry>
 </search>
