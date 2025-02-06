@@ -51,10 +51,10 @@ darkmode: false
 # ---------------------------------------------------------------
 
 favicon:
-  small: /images/favicon-16x16-next.png
-  medium: /images/favicon-32x32-next.png
-  apple_touch_icon: /images/apple-touch-icon-next.png
-  safari_pinned_tab: /images/logo.svg
+  small: /images/snake.png
+  medium: /images/snake.png
+  apple_touch_icon: /images/snake.png
+  safari_pinned_tab: /images/snake.png
   #android_manifest: /manifest.json
 
 # Custom Logo (Warning: Do not support scheme Mist)
@@ -351,7 +351,7 @@ mobile_layout_economy: false
 
 # Browser header panel color.
 theme_color:
-  light: "#222"
+  light: "#CD5C5C"
   dark: "#222"
 
 # Override browsers' default behavior.
@@ -406,7 +406,7 @@ reading_progress:
 bookmark:
   enable: true
   # Customize the color of the bookmark.
-  color: "#222"
+  color: "#008080"
   # If auto, save the reading progress when closing the page or clicking the bookmark-icon.
   # If manual, only save it by clicking the bookmark-icon.
   save: auto
