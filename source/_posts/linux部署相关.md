@@ -5,8 +5,15 @@ tags:
   - 端口
   - 免密登录
 categories:
-  - server
+  - 服务器部署
 ---
+
+设置端口允许IP访问
+免密登录
+端口占用查询
+
+
+<!-- more -->
 
 ### 设置端口允许IP访问
 ```
@@ -22,7 +29,7 @@ firewall-cmd --zone=public --list-rich-rules
 ##### 生成密钥
 
 ```
-ssh-keygen -t rsa
+ssh-keygen -t rsa -C topnoah@gmail.com"
 ```
 
 ##### 复制到Linux服务器
@@ -30,6 +37,8 @@ ssh-keygen -t rsa
 ```
 type id_rsa.pub | ssh root@远程服务器 "cat >> .ssh/authorized_keys"
 ```
+
+<!-- more -->
 
 ##### 复制公钥到指定服务器
 可以直接将本地公钥复制到指定服务器
@@ -95,3 +104,5 @@ dpkg -i jdk-17.0.9_linux-x64_bin.deb
 ```
 javac & java -version
 ```
+
+<!-- more -->

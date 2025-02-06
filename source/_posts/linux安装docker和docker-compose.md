@@ -4,10 +4,12 @@ tags:
  - Linux
  - Ubuntu
 categories:
- - server
+ - 服务器部署
 ---
 
-在 Ubuntu 上安装 Docker 和 Docker Compose，卸载Docker 和 Docker Compose，按照以下步骤进行操作：
+在 Ubuntu 上安装 Docker 和 Docker Compose，卸载Docker 和 Docker Compose
+
+<!-- more -->
 
 ### 安装 Docker
 
