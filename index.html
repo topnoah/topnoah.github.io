@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"topnoah.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"topnoah.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
     <meta property="og:type" content="website">
 <meta property="og:title">
@@ -248,6 +248,122 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://topnoah.github.io/2025/02/06/linux%E9%83%A8%E7%BD%B2%E7%9B%B8%E5%85%B3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="dong">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/02/06/linux%E9%83%A8%E7%BD%B2%E7%9B%B8%E5%85%B3/" class="post-title-link" itemprop="url">Linux服务器基础设置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-02-06 14:08:54" itemprop="dateCreated datePublished" datetime="2025-02-06T14:08:54+08:00">2025-02-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/server/" itemprop="url" rel="index"><span itemprop="name">server</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="设置端口允许IP访问"><a href="#设置端口允许IP访问" class="headerlink" title="设置端口允许IP访问"></a>设置端口允许IP访问</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#允许IP 104.168.76.12 访问 9529 端口</span><br><span class="line">firewall-cmd --permanent --add-rich-rule=&quot;rule family=&quot;ipv4&quot; source address=&quot;104.168.76.12&quot; port protocol=&quot;tcp&quot; port=&quot;9529&quot; accept&quot;</span><br><span class="line">#重新载入一下防火墙设置，使设置生效</span><br><span class="line">firewall-cmd --reload</span><br><span class="line">#查看已设置规则</span><br><span class="line">firewall-cmd --zone=public --list-rich-rules</span><br></pre></td></tr></table></figure>
+
+<h3 id="免密登录"><a href="#免密登录" class="headerlink" title="免密登录"></a>免密登录</h3><h5 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+
+<h5 id="复制到Linux服务器"><a href="#复制到Linux服务器" class="headerlink" title="复制到Linux服务器"></a>复制到Linux服务器</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type id_rsa.pub | ssh root@远程服务器 &quot;cat &gt;&gt; .ssh/authorized_keys&quot;</span><br></pre></td></tr></table></figure>
+
+<h5 id="复制公钥到指定服务器"><a href="#复制公钥到指定服务器" class="headerlink" title="复制公钥到指定服务器"></a>复制公钥到指定服务器</h5><p>可以直接将本地公钥复制到指定服务器</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id root@vps-ubuntu</span><br></pre></td></tr></table></figure>
+
+<h5 id="端口占用查询"><a href="#端口占用查询" class="headerlink" title="端口占用查询"></a>端口占用查询</h5><p>查看所有的服务端口（LISTEN，ESTABLISHED）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -ap</span><br></pre></td></tr></table></figure>
+
+<p>查看指定端口，可以结合grep命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -ap | grep 8080</span><br></pre></td></tr></table></figure>
+
+<p>也可以使用lsof命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -i:8888</span><br></pre></td></tr></table></figure>
+
+<p>若要关闭使用这个端口的程序，使用kill + 对应的pid</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kill -9 PID</span><br></pre></td></tr></table></figure>
+
+<h5 id="ubuntu安装apache2-java"><a href="#ubuntu安装apache2-java" class="headerlink" title="ubuntu安装apache2,java"></a>ubuntu安装apache2,java</h5><p>下载</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://dlcdn.apache.org/maven/maven-3/3.9.5/binaries/apache-maven-3.9.5-bin.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>解压</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar xzvf apache-maven-3.9.5-bin.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>添加到Path</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Add the bin directory of the created directory apache-maven-3.9.5 to the PATH environment variable</span><br><span class="line">Confirm with mvn -v in a new shell. The result should look similar to</span><br></pre></td></tr></table></figure>
+<p>或者直接使用路径</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/path/maven/apache-maven-3.9.5/bin/mvn -v</span><br></pre></td></tr></table></figure>
+
+<h5 id="安装JDK17"><a href="#安装JDK17" class="headerlink" title="安装JDK17"></a>安装JDK17</h5><p>下载</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://download.oracle.com/java/17/archive/jdk-17.0.9_linux-x64_bin.deb</span><br></pre></td></tr></table></figure>
+
+<p>安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpkg -i jdk-17.0.9_linux-x64_bin.deb</span><br></pre></td></tr></table></figure>
+
+<p>验证</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javac &amp; java -version</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://topnoah.github.io/2025/02/06/linux%E5%AE%89%E8%A3%85docker%E5%92%8Cdocker-compose/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -384,122 +500,6 @@
 
 <p>这就卸载了 Docker Compose</p>
 
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://topnoah.github.io/2025/02/06/linux%E9%83%A8%E7%BD%B2%E7%9B%B8%E5%85%B3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="dong">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/02/06/linux%E9%83%A8%E7%BD%B2%E7%9B%B8%E5%85%B3/" class="post-title-link" itemprop="url">Linux服务器基础设置</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-02-06 14:08:54" itemprop="dateCreated datePublished" datetime="2025-02-06T14:08:54+08:00">2025-02-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/server/" itemprop="url" rel="index"><span itemprop="name">server</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="设置端口允许IP访问"><a href="#设置端口允许IP访问" class="headerlink" title="设置端口允许IP访问"></a>设置端口允许IP访问</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#允许IP 104.168.76.12 访问 9529 端口</span><br><span class="line">firewall-cmd --permanent --add-rich-rule=&quot;rule family=&quot;ipv4&quot; source address=&quot;104.168.76.12&quot; port protocol=&quot;tcp&quot; port=&quot;9529&quot; accept&quot;</span><br><span class="line">#重新载入一下防火墙设置，使设置生效</span><br><span class="line">firewall-cmd --reload</span><br><span class="line">#查看已设置规则</span><br><span class="line">firewall-cmd --zone=public --list-rich-rules</span><br></pre></td></tr></table></figure>
-
-<h3 id="免密登录"><a href="#免密登录" class="headerlink" title="免密登录"></a>免密登录</h3><h5 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
-
-<h5 id="复制到Linux服务器"><a href="#复制到Linux服务器" class="headerlink" title="复制到Linux服务器"></a>复制到Linux服务器</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type id_rsa.pub | ssh root@远程服务器 &quot;cat &gt;&gt; .ssh/authorized_keys&quot;</span><br></pre></td></tr></table></figure>
-
-<h5 id="复制公钥到指定服务器"><a href="#复制公钥到指定服务器" class="headerlink" title="复制公钥到指定服务器"></a>复制公钥到指定服务器</h5><p>可以直接将本地公钥复制到指定服务器</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id root@vps-ubuntu</span><br></pre></td></tr></table></figure>
-
-<h5 id="端口占用查询"><a href="#端口占用查询" class="headerlink" title="端口占用查询"></a>端口占用查询</h5><p>查看所有的服务端口（LISTEN，ESTABLISHED）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -ap</span><br></pre></td></tr></table></figure>
-
-<p>查看指定端口，可以结合grep命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -ap | grep 8080</span><br></pre></td></tr></table></figure>
-
-<p>也可以使用lsof命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -i:8888</span><br></pre></td></tr></table></figure>
-
-<p>若要关闭使用这个端口的程序，使用kill + 对应的pid</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kill -9 PID</span><br></pre></td></tr></table></figure>
-
-<h5 id="ubuntu安装apache2-java"><a href="#ubuntu安装apache2-java" class="headerlink" title="ubuntu安装apache2,java"></a>ubuntu安装apache2,java</h5><p>下载</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://dlcdn.apache.org/maven/maven-3/3.9.5/binaries/apache-maven-3.9.5-bin.tar.gz</span><br></pre></td></tr></table></figure>
-
-<p>解压</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar xzvf apache-maven-3.9.5-bin.tar.gz</span><br></pre></td></tr></table></figure>
-
-<p>添加到Path</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Add the bin directory of the created directory apache-maven-3.9.5 to the PATH environment variable</span><br><span class="line">Confirm with mvn -v in a new shell. The result should look similar to</span><br></pre></td></tr></table></figure>
-<p>或者直接使用路径</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/path/maven/apache-maven-3.9.5/bin/mvn -v</span><br></pre></td></tr></table></figure>
-
-<h5 id="安装JDK17"><a href="#安装JDK17" class="headerlink" title="安装JDK17"></a>安装JDK17</h5><p>下载</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://download.oracle.com/java/17/archive/jdk-17.0.9_linux-x64_bin.deb</span><br></pre></td></tr></table></figure>
-
-<p>安装</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpkg -i jdk-17.0.9_linux-x64_bin.deb</span><br></pre></td></tr></table></figure>
-
-<p>验证</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javac &amp; java -version</span><br></pre></td></tr></table></figure>
       
     </div>
 
