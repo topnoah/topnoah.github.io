@@ -16,19 +16,19 @@ categories:
 
 1. 更新系统软件包列表：
 
-```sh
+```shell
 sudo apt update
 ```
 
 2. 安装 Docker 依赖包：
 
-```sh
+```shell
 sudo apt install apt-transport-https ca-certificates curl software-properties-common
 ```
 
 3. 添加 Docker 的官方 GPG 密钥：
 
-```sh
+```shell
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 ```
 
@@ -36,26 +36,26 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o 
 
 - 对于 x86_64/amd64 架构的系统：
 
-```sh
+```shell
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ```
 
 - 对于 ARM64 架构的系统（如树莓派）：
 
-```sh
+```shell
 echo "deb [arch=arm64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ```
 
 5. 安装 Docker：
 
-```sh
+```shell
 sudo apt update
 sudo apt install docker-ce docker-ce-cli containerd.io
 ```
 
 6. 验证 Docker 是否成功安装：
 
-```sh
+```shell
 sudo docker run hello-world
 ```
 
@@ -68,32 +68,32 @@ sudo docker run hello-world
 要完全卸载Ubuntu上的Docker，执行以下步骤：
 
 1. 停止所有正在运行的Docker容器。可以使用以下命令停止所有容器：
-   ```
+   ```shell
    sudo docker stop $(sudo docker ps -a -q)
    ```
 
 2. 删除所有Docker容器。运行以下命令删除所有容器：
-   ```
+   ```shell
    sudo docker rm $(sudo docker ps -a -q)
    ```
 
 3. 停止Docker服务。使用以下命令停止Docker服务：
-   ```
+   ```shell
    sudo systemctl stop docker
    ```
 
 4. 卸载Docker软件包。运行以下命令卸载Docker软件包：
-   ```
+   ```shell
    sudo apt-get purge docker-ce docker-ce-cli containerd.io
    ```
 
 5. 删除Docker相关的配置和数据。使用以下命令删除Docker的配置和数据：
-   ```
+   ```shell
    sudo rm -rf /var/lib/docker
    ```
 
 6. 删除Docker用户组。运行以下命令删除Docker用户组：
-   ```
+   ```shell
    sudo groupdel docker
    ```
 
@@ -105,19 +105,19 @@ sudo docker run hello-world
 
 1. 下载 Docker Compose 的可执行文件：
 
-```sh
+```shell
 sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 ```
 
 2. 添加执行权限：
 
-```sh
+```shell
 sudo chmod +x /usr/local/bin/docker-compose
 ```
 
 3. 验证 Docker Compose 是否成功安装：
 
-```sh
+```shell
 docker-compose --version
 ```
 
@@ -129,7 +129,7 @@ docker-compose --version
 
 1. 直接删除 Docker Compose 的可执行文件：
 
-```sh
+```shell
 sudo rm -rf /usr/local/bin/docker-compose
 ```
 

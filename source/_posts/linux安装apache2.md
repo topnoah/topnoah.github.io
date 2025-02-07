@@ -17,19 +17,19 @@ Linux Apache2多端口，多项目部署。
 
 #### 安装Apache2
 
-```bash
+```shell
 sudo apt update
 sudo apt install apache2
 ```
 
 #### 找到ports.conf文件
 
-```bash
+```shell
 cd /etc/apache2
 ls
 ```
 
-```bash
+```shell
 root@nine:~# cd /etc/apache2/
 root@nine:/etc/apache2# ls
 apache2.conf    conf-enabled  magic           mods-enabled  sites-available
@@ -38,13 +38,13 @@ conf-available  envvars       mods-available  ports.conf    sites-enabled
 
 #### 编辑ports.conf文件
 
-```bash
+```shell
 vim ports.conf
 ```
 
 #### 添加端口，如下
 
-```bash
+```apache
 # If you just change the port or add more ports here, you will likely also
 # have to change the VirtualHost statement in
 # /etc/apache2/sites-enabled/000-default.conf
@@ -72,11 +72,11 @@ Listen 23108
 
 #### 添加站点（sites.available）
 
-```bash
+```shell
 cd sites-available/
 ```
 
-```bash
+```shell
 root@nine:/etc/apache2# cd sites-available/
 root@nine:/etc/apache2/sites-available# ls
 000-default.conf  default-ssl.conf
@@ -84,11 +84,11 @@ root@nine:/etc/apache2/sites-available# ls
 
 编辑站点
 
-```bash
+```shell
  vim 000-default.conf
 ```
 
-```bash
+```apache
 <VirtualHost *:23106>
         ServerAdmin webmaster@localhost
         DocumentRoot /var/www/html
@@ -114,12 +114,12 @@ root@nine:/etc/apache2/sites-available# ls
 
 #### 重启Apache2服务
 
-```bash
+```shell
 systemctl restart apache2
 ```
 
 #### 卸载apache2
-```
+```shell
 apt remove apache2
 ```
 
