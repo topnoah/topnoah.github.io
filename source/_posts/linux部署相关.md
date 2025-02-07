@@ -1,9 +1,10 @@
 ---
 title: Linux服务器基础设置
 tags:
-  - Linux
-  - 端口
-  - 免密登录
+  - debian
+  - ubuntu
+  - port
+  - ssh
 categories:
   - 服务器部署
 ---

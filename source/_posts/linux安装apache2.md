@@ -1,8 +1,10 @@
 ---
-title: ubuntu(debain) Apache2多端口部署
+title: ubuntu(debian) Apache2多端口部署
 tags:
- - Linux
- - Apache2
+ - ubuntu
+ - debian
+ - apache2
+ - port
 categories:
  - 服务器部署
 ---
