@@ -1,7 +1,8 @@
 ---
 title: Ubuntu安装Docker和docker-compose
 tags:
- - Linux
+ - docker
+ - docker-compose
  - Ubuntu
 categories:
  - 服务器部署
