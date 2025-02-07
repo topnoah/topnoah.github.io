@@ -7,7 +7,7 @@ categories:
  - 服务器部署
 ---
 
-Linux Apache2多端口部署
+Linux Apache2多端口，多项目部署。
 
 <!-- more -->
 

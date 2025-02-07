@@ -8,9 +8,7 @@ categories:
   - 服务器部署
 ---
 
-设置端口允许IP访问
-免密登录
-端口占用查询
+设置端口允许IP访问，免密登录，端口占用查询。
 
 
 <!-- more -->
@@ -104,5 +102,3 @@ dpkg -i jdk-17.0.9_linux-x64_bin.deb
 ```
 javac & java -version
 ```
-
-<!-- more -->
