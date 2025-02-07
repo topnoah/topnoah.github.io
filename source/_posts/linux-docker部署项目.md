@@ -15,7 +15,7 @@ categories:
     - 服务器部署
 ---
 
-Linux Docker部署项目，包括Docker安装、Mysql、Redis、RabbitMQ、Java、Maven、Nginx、minio等环境准备。
+> Linux Docker部署项目，包括Docker安装、Mysql、Redis、RabbitMQ、Java、Maven、Nginx、minio等环境准备。
 <!-- more -->
 
 

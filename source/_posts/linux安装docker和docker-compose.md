@@ -8,7 +8,7 @@ categories:
  - 服务器部署
 ---
 
-在 Ubuntu 上安装 Docker 和 Docker Compose，卸载Docker 和 Docker Compose。
+> 在 Ubuntu 上安装 Docker 和 Docker Compose，卸载Docker 和 Docker Compose。
 
 <!-- more -->
 
