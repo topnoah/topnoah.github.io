@@ -61,6 +61,26 @@ Redis的配置文件位于/etc/redis/redis.conf。可以根据需要编辑此文
 ```shell
 sudo nano /etc/redis/redis.conf
 ```
+- 默认情况下，Redis只允许本地访问。如果需要从远程访问Redis，可以编辑配置文件/etc/redis/redis.conf
+  找到bind，将其注释掉：
+    ```apache
+    # bind 127.0.0.1
+    ```
+
+- 关闭保护，找到protected-mode，将其改为no：
+    ```apache
+    protected-mode no
+    ```
+
+- 修改端口，找到port，将其改为你想要的端口号：
+    ```apache
+    port 6379
+    ```
+- 设置密码，找到requirepass，将其改为你想要的密码：
+    ```apache
+    requirepass yourpassword
+    ```
+
 修改后，重启Redis服务以使更改生效：
 ```shell
 sudo systemctl restart redis-server
@@ -71,6 +91,8 @@ sudo systemctl restart redis-server
 ```shell
 sudo ufw allow 6379/tcp
 ```
+
+
 #### 8. 卸载Redis（可选）
 如果不再需要Redis，可以使用以下命令卸载它：
 ```shell
