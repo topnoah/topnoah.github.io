@@ -13,23 +13,22 @@ categories:
 
 <!-- more -->
 
-### 安装redis
-
 #### 安装redis
 
-##### 1. 更新系统包列表
+
+#### 1. 更新系统包列表
 首先，确保系统包列表是最新的：
 ```shell
 sudo apt update
 ```
 
-##### 2. 安装Redis
+#### 2. 安装Redis
 使用以下命令安装Redis：
 ```shell
 sudo apt install redis-server
 ```
 
-##### 3. 启动Redis服务
+#### 3. 启动Redis服务
 安装完成后，Redis服务会自动启动。可以使用以下命令来检查Redis服务的状态：
 ```shell
 sudo systemctl status redis-server
@@ -38,13 +37,13 @@ sudo systemctl status redis-server
 ```shell
 sudo systemctl start redis-server
 ```
-##### 4. 设置Redis开机自启
+#### 4. 设置Redis开机自启
 为了确保Redis在系统启动时自动启动，可以启用它的自启动：
 ```shell
 sudo systemctl enable redis-server
 ```
 
-##### 5. 测试Redis
+#### 5. 测试Redis
 可以使用Redis自带的命令行工具redis-cli来测试Redis是否正常工作：
 ```shell
 redis-cli
@@ -55,7 +54,7 @@ redis-cli
 PONG
 ```
 PONG
-##### 6. 配置Redis（可选）
+#### 6. 配置Redis（可选）
 Redis的配置文件位于/etc/redis/redis.conf。可以根据需要编辑此文件来更改Redis的配置。例如，你可以更改绑定的IP地址、端口号、设置密码等。
 
 编辑配置文件：
@@ -67,12 +66,12 @@ sudo nano /etc/redis/redis.conf
 sudo systemctl restart redis-server
 ```
 
-##### 7. 防火墙配置（可选）
+#### 7. 防火墙配置（可选）
 如果服务器启用了防火墙，你需要允许Redis的端口（默认是6379）通过防火墙：
 ```shell
 sudo ufw allow 6379/tcp
 ```
-##### 8. 卸载Redis（可选）
+#### 8. 卸载Redis（可选）
 如果不再需要Redis，可以使用以下命令卸载它：
 ```shell
 sudo apt remove --purge redis-server
