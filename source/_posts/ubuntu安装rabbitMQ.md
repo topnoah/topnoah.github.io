@@ -56,4 +56,24 @@ sudo systemctl start rabbitmq-server
 ```shell
 sudo systemctl status rabbitmq-server
 ```
+
+#### 设置 RabbitMQ 的管理用户
+使用以下命令设置 RabbitMQ 的管理用户  
+```shell
+sudo rabbitmqctl add_user admin password
+```
+
+#### 修改 RabbitMQ 端口号
+默认情况下，RabbitMQ 使用 5672 端口。如果需要更改端口号，请编辑配置文件  
+```shell
+sudo nano /etc/rabbitmq/rabbitmq.conf
+```
+在文件中添加以下行，将端口号更改为 5673  
+```shell
+# 监听端口
+listeners.tcp.port = 5673
+# 管理界面端口
+management.tcp.port = 15673
+```
+
 通过以上步骤，您将在 Ubuntu 系统上安装并运行 RabbitMQ。
