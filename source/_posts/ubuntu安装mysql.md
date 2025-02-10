@@ -13,7 +13,6 @@ categories:
 
 <!-- more -->
 
-### 安装mysql
 
 #### 1. 更新apt-get源
 首先，确保你的系统包列表是最新的
