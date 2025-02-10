@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>linux-docker部署项目</title>
+    <url>/2025/02/07/linux-docker%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/</url>
+    <content><![CDATA[<blockquote>
+<p>Linux Docker部署项目，包括Docker安装、Mysql、Redis、RabbitMQ、Java、Maven、Nginx、minio等环境准备。</p>
+</blockquote>
+<span id="more"></span>
+
+
+<h3 id="安装-Docker"><a href="#安装-Docker" class="headerlink" title="安装 Docker"></a>安装 Docker</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install apt-transport-https ca-certificates curl software-properties-common</span><br><span class="line">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg</span><br><span class="line">echo &quot;deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot; | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install docker-ce docker-ce-cli containerd.io</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-Docker-Mysql"><a href="#安装-Docker-Mysql" class="headerlink" title="安装 Docker Mysql"></a>安装 Docker Mysql</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d --name mysql --restart=always -p 3306:3306 -e MYSQL_ROOT_PASSWORD=poiu0987  mysql:latest</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-Docker-Redis"><a href="#安装-Docker-Redis" class="headerlink" title="安装 Docker Redis"></a>安装 Docker Redis</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d  --name redis --restart=always -p 6379:6379 redis --requirepass &quot;poiu0987&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-Docker-RabbitMQ"><a href="#安装-Docker-RabbitMQ" class="headerlink" title="安装 Docker RabbitMQ"></a>安装 Docker RabbitMQ</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d --name rabbitmq --restart=always -p 15672:15672 -p 5672:5672 rabbitmq:latest</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-Java"><a href="#安装-Java" class="headerlink" title="安装 Java"></a>安装 Java</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo add-apt-repository ppa:openjdk-r/ppa</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt-get install openjdk-21-jre</span><br><span class="line">sudo apt-get install openjdk-21-jdk</span><br><span class="line">java --version</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-Maven"><a href="#安装-Maven" class="headerlink" title="安装 Maven"></a>安装 Maven</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz</span><br><span class="line">tar -zxvf apache-maven-3.9.9-bin.tar.gz</span><br><span class="line">mv apache-maven-3.9.9 /opt/</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-Nginx"><a href="#安装-Nginx" class="headerlink" title="安装 Nginx"></a>安装 Nginx</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install nginx</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-minio"><a href="#安装-minio" class="headerlink" title="安装 minio"></a>安装 minio</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d --name minio --restart=always -p 9000:9000</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>服务器部署</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Docker</tag>
+        <tag>Mysql</tag>
+        <tag>Redis</tag>
+        <tag>RabbitMQ</tag>
+        <tag>Java</tag>
+        <tag>Maven</tag>
+        <tag>Nginx</tag>
+        <tag>minio</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ubuntu(debian) Apache2多端口部署</title>
     <url>/2025/02/10/linux%E5%AE%89%E8%A3%85apache2/</url>
     <content><![CDATA[<blockquote>
@@ -44,42 +83,44 @@
       </tags>
   </entry>
   <entry>
-    <title>linux-docker部署项目</title>
-    <url>/2025/02/07/linux-docker%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/</url>
+    <title>Linux服务器基础设置</title>
+    <url>/2025/02/10/linux%E9%83%A8%E7%BD%B2%E7%9B%B8%E5%85%B3/</url>
     <content><![CDATA[<blockquote>
-<p>Linux Docker部署项目，包括Docker安装、Mysql、Redis、RabbitMQ、Java、Maven、Nginx、minio等环境准备。</p>
+<p>设置端口允许IP访问，免密登录，端口占用查询。</p>
 </blockquote>
 <span id="more"></span>
 
+<h3 id="设置端口允许IP访问"><a href="#设置端口允许IP访问" class="headerlink" title="设置端口允许IP访问"></a>设置端口允许IP访问</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">允许IP 104.168.76.12 访问 9529 端口</span></span><br><span class="line">firewall-cmd --permanent --add-rich-rule=&quot;rule family=&quot;ipv4&quot; source address=&quot;104.168.76.12&quot; port protocol=&quot;tcp&quot; port=&quot;9529&quot; accept&quot;</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">重新载入一下防火墙设置，使设置生效</span></span><br><span class="line">firewall-cmd --reload</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">查看已设置规则</span></span><br><span class="line">firewall-cmd --zone=public --list-rich-rules</span><br></pre></td></tr></table></figure>
 
-<h3 id="安装-Docker"><a href="#安装-Docker" class="headerlink" title="安装 Docker"></a>安装 Docker</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install apt-transport-https ca-certificates curl software-properties-common</span><br><span class="line">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg</span><br><span class="line">echo &quot;deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot; | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install docker-ce docker-ce-cli containerd.io</span><br></pre></td></tr></table></figure>
+<h3 id="免密登录"><a href="#免密登录" class="headerlink" title="免密登录"></a>免密登录</h3><h5 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C topnoah@gmail.com&quot;</span><br></pre></td></tr></table></figure>
 
-<h3 id="安装-Docker-Mysql"><a href="#安装-Docker-Mysql" class="headerlink" title="安装 Docker Mysql"></a>安装 Docker Mysql</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d --name mysql --restart=always -p 3306:3306 -e MYSQL_ROOT_PASSWORD=poiu0987  mysql:latest</span><br></pre></td></tr></table></figure>
+<h5 id="复制到Linux服务器"><a href="#复制到Linux服务器" class="headerlink" title="复制到Linux服务器"></a>复制到Linux服务器</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">type id_rsa.pub | ssh root@远程服务器 &quot;cat &gt;&gt; .ssh/authorized_keys&quot;</span><br></pre></td></tr></table></figure>
 
-<h3 id="安装-Docker-Redis"><a href="#安装-Docker-Redis" class="headerlink" title="安装 Docker Redis"></a>安装 Docker Redis</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d  --name redis --restart=always -p 6379:6379 redis --requirepass &quot;poiu0987&quot;</span><br></pre></td></tr></table></figure>
+<!-- more -->
 
-<h3 id="安装-Docker-RabbitMQ"><a href="#安装-Docker-RabbitMQ" class="headerlink" title="安装 Docker RabbitMQ"></a>安装 Docker RabbitMQ</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d --name rabbitmq --restart=always -p 15672:15672 -p 5672:5672 rabbitmq:latest</span><br></pre></td></tr></table></figure>
+<h5 id="复制公钥到指定服务器"><a href="#复制公钥到指定服务器" class="headerlink" title="复制公钥到指定服务器"></a>复制公钥到指定服务器</h5><p>可以直接将本地公钥复制到指定服务器</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-copy-id root@vps-ubuntu</span><br></pre></td></tr></table></figure>
 
-<h3 id="安装-Java"><a href="#安装-Java" class="headerlink" title="安装 Java"></a>安装 Java</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo add-apt-repository ppa:openjdk-r/ppa</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt-get install openjdk-21-jre</span><br><span class="line">sudo apt-get install openjdk-21-jdk</span><br><span class="line">java --version</span><br></pre></td></tr></table></figure>
+<h5 id="端口占用查询"><a href="#端口占用查询" class="headerlink" title="端口占用查询"></a>端口占用查询</h5><p>查看所有的服务端口（LISTEN，ESTABLISHED）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">netstat -ap</span><br></pre></td></tr></table></figure>
 
-<h3 id="安装-Maven"><a href="#安装-Maven" class="headerlink" title="安装 Maven"></a>安装 Maven</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz</span><br><span class="line">tar -zxvf apache-maven-3.9.9-bin.tar.gz</span><br><span class="line">mv apache-maven-3.9.9 /opt/</span><br></pre></td></tr></table></figure>
+<p>查看指定端口，可以结合grep命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">netstat -ap | grep 8080</span><br></pre></td></tr></table></figure>
 
-<h3 id="安装-Nginx"><a href="#安装-Nginx" class="headerlink" title="安装 Nginx"></a>安装 Nginx</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install nginx</span><br></pre></td></tr></table></figure>
+<p>也可以使用lsof命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">lsof -i:8888</span><br></pre></td></tr></table></figure>
 
-<h3 id="安装-minio"><a href="#安装-minio" class="headerlink" title="安装 minio"></a>安装 minio</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d --name minio --restart=always -p 9000:9000</span><br></pre></td></tr></table></figure>]]></content>
+<p>若要关闭使用这个端口的程序，使用kill + 对应的pid</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kill -9 PID</span><br></pre></td></tr></table></figure>
+]]></content>
       <categories>
         <category>服务器部署</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
-        <tag>Docker</tag>
-        <tag>Mysql</tag>
-        <tag>Redis</tag>
-        <tag>RabbitMQ</tag>
-        <tag>Java</tag>
-        <tag>Maven</tag>
-        <tag>Nginx</tag>
-        <tag>minio</tag>
+        <tag>ubuntu</tag>
+        <tag>debian</tag>
+        <tag>port</tag>
+        <tag>ssh</tag>
       </tags>
   </entry>
   <entry>
@@ -184,152 +225,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux服务器基础设置</title>
-    <url>/2025/02/10/linux%E9%83%A8%E7%BD%B2%E7%9B%B8%E5%85%B3/</url>
-    <content><![CDATA[<blockquote>
-<p>设置端口允许IP访问，免密登录，端口占用查询。</p>
-</blockquote>
-<span id="more"></span>
-
-<h3 id="设置端口允许IP访问"><a href="#设置端口允许IP访问" class="headerlink" title="设置端口允许IP访问"></a>设置端口允许IP访问</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">允许IP 104.168.76.12 访问 9529 端口</span></span><br><span class="line">firewall-cmd --permanent --add-rich-rule=&quot;rule family=&quot;ipv4&quot; source address=&quot;104.168.76.12&quot; port protocol=&quot;tcp&quot; port=&quot;9529&quot; accept&quot;</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">重新载入一下防火墙设置，使设置生效</span></span><br><span class="line">firewall-cmd --reload</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">查看已设置规则</span></span><br><span class="line">firewall-cmd --zone=public --list-rich-rules</span><br></pre></td></tr></table></figure>
-
-<h3 id="免密登录"><a href="#免密登录" class="headerlink" title="免密登录"></a>免密登录</h3><h5 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C topnoah@gmail.com&quot;</span><br></pre></td></tr></table></figure>
-
-<h5 id="复制到Linux服务器"><a href="#复制到Linux服务器" class="headerlink" title="复制到Linux服务器"></a>复制到Linux服务器</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">type id_rsa.pub | ssh root@远程服务器 &quot;cat &gt;&gt; .ssh/authorized_keys&quot;</span><br></pre></td></tr></table></figure>
-
-<!-- more -->
-
-<h5 id="复制公钥到指定服务器"><a href="#复制公钥到指定服务器" class="headerlink" title="复制公钥到指定服务器"></a>复制公钥到指定服务器</h5><p>可以直接将本地公钥复制到指定服务器</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-copy-id root@vps-ubuntu</span><br></pre></td></tr></table></figure>
-
-<h5 id="端口占用查询"><a href="#端口占用查询" class="headerlink" title="端口占用查询"></a>端口占用查询</h5><p>查看所有的服务端口（LISTEN，ESTABLISHED）</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">netstat -ap</span><br></pre></td></tr></table></figure>
-
-<p>查看指定端口，可以结合grep命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">netstat -ap | grep 8080</span><br></pre></td></tr></table></figure>
-
-<p>也可以使用lsof命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">lsof -i:8888</span><br></pre></td></tr></table></figure>
-
-<p>若要关闭使用这个端口的程序，使用kill + 对应的pid</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kill -9 PID</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>服务器部署</category>
-      </categories>
-      <tags>
-        <tag>ubuntu</tag>
-        <tag>debian</tag>
-        <tag>port</tag>
-        <tag>ssh</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ubuntu安装rabbitMQ</title>
-    <url>/2025/02/09/ubuntu%E5%AE%89%E8%A3%85rabbitMQ/</url>
-    <content><![CDATA[<blockquote>
-<p>ubuntu安装rabbitMQ</p>
-</blockquote>
-<span id="more"></span>
-
-<h3 id="安装RabbitMQ"><a href="#安装RabbitMQ" class="headerlink" title="安装RabbitMQ"></a>安装RabbitMQ</h3><h4 id="更新软件包列表"><a href="#更新软件包列表" class="headerlink" title="更新软件包列表"></a>更新软件包列表</h4><p>首先，确保系统包列表是最新的</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
-
-<h4 id="安装-Erlang（RabbitMQ-的依赖项）"><a href="#安装-Erlang（RabbitMQ-的依赖项）" class="headerlink" title="安装 Erlang（RabbitMQ 的依赖项）"></a>安装 Erlang（RabbitMQ 的依赖项）</h4><p>RabbitMQ 是使用 Erlang 编写的，因此需要安装 Erlang</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt install erlang</span><br></pre></td></tr></table></figure>
-
-<h4 id="添加-RabbitMQ-仓库"><a href="#添加-RabbitMQ-仓库" class="headerlink" title="添加 RabbitMQ 仓库"></a>添加 RabbitMQ 仓库</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo &quot;deb https://dl.bintray.com/rabbitmq/debian bionic main&quot; | sudo tee /etc/apt/sources.list.d/bintray.rabbitmq.list</span><br></pre></td></tr></table></figure>
-
-<p>添加 RabbitMQ 公钥  </p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget -O- https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | sudo apt-key add -</span><br></pre></td></tr></table></figure>
-<p>再次更新软件包列表  </p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
-<h4 id="安装-RabbitMQ"><a href="#安装-RabbitMQ" class="headerlink" title="安装 RabbitMQ"></a>安装 RabbitMQ</h4><p>使用以下命令安装 RabbitMQ  </p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt install rabbitmq-server</span><br></pre></td></tr></table></figure>
-
-<h4 id="启用并启动-RabbitMQ-服务"><a href="#启用并启动-RabbitMQ-服务" class="headerlink" title="启用并启动 RabbitMQ 服务"></a>启用并启动 RabbitMQ 服务</h4><p>启用 RabbitMQ 服务并在系统启动时启动它  </p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl enable rabbitmq-server</span><br><span class="line">sudo systemctl start rabbitmq-server</span><br></pre></td></tr></table></figure>
-
-<h4 id="检查-RabbitMQ-的状态"><a href="#检查-RabbitMQ-的状态" class="headerlink" title="检查 RabbitMQ 的状态"></a>检查 RabbitMQ 的状态</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl status rabbitmq-server</span><br></pre></td></tr></table></figure>
-
-<h4 id="设置-RabbitMQ-的管理用户"><a href="#设置-RabbitMQ-的管理用户" class="headerlink" title="设置 RabbitMQ 的管理用户"></a>设置 RabbitMQ 的管理用户</h4><p>使用以下命令设置 RabbitMQ 的管理用户  </p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo rabbitmqctl add_user admin password</span><br></pre></td></tr></table></figure>
-
-<h4 id="修改-RabbitMQ-端口号"><a href="#修改-RabbitMQ-端口号" class="headerlink" title="修改 RabbitMQ 端口号"></a>修改 RabbitMQ 端口号</h4><p>默认情况下，RabbitMQ 使用 5672 端口。如果需要更改端口号，请编辑配置文件  </p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo nano /etc/rabbitmq/rabbitmq.conf</span><br></pre></td></tr></table></figure>
-<p>在文件中添加以下行，将端口号更改为 5673  </p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">监听端口</span></span><br><span class="line">listeners.tcp.port = 5673</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">管理界面端口</span></span><br><span class="line">management.tcp.port = 15673</span><br></pre></td></tr></table></figure>
-
-<p>通过以上步骤，您将在 Ubuntu 系统上安装并运行 RabbitMQ。</p>
-]]></content>
-      <categories>
-        <category>服务器部署</category>
-      </categories>
-      <tags>
-        <tag>ubuntu</tag>
-        <tag>rabbitMQ</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ubuntu安装mysql</title>
-    <url>/2025/02/10/ubuntu%E5%AE%89%E8%A3%85mysql/</url>
-    <content><![CDATA[<blockquote>
-<p>本文介绍如何在ubuntu上安装mysql</p>
-</blockquote>
-<span id="more"></span>
-
-<h3 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h3><h4 id="1-更新apt-get源"><a href="#1-更新apt-get源" class="headerlink" title="1. 更新apt-get源"></a>1. 更新apt-get源</h4><p>首先，确保你的系统包列表是最新的</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get update</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-安装mysql"><a href="#2-安装mysql" class="headerlink" title="2. 安装mysql"></a>2. 安装mysql</h4><p>运行以下命令安装MySQL服务器</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get install mysql-server</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-启动并启用MySQL服务"><a href="#3-启动并启用MySQL服务" class="headerlink" title="3. 启动并启用MySQL服务"></a>3. 启动并启用MySQL服务</h4><p>安装完成后，MySQL服务会自动启动。你可以通过以下命令检查其状态</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl status mysql</span><br></pre></td></tr></table></figure>
-<p>如果MySQL没有自动启动，可以使用以下命令启动它</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl start mysql</span><br></pre></td></tr></table></figure>
-<p>为了让MySQL在系统启动时自动运行，启用它</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> mysql</span><br></pre></td></tr></table></figure>
-
-<h4 id="4-运行安全脚本（推荐）"><a href="#4-运行安全脚本（推荐）" class="headerlink" title="4. 运行安全脚本（推荐）"></a>4. 运行安全脚本（推荐）</h4><p>MySQL安装后，建议运行安全脚本来设置root密码并提高安全性</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> mysql_secure_installation</span><br></pre></td></tr></table></figure>
-<ol>
-<li>按照提示完成以下操作：</li>
-<li>设置root用户的密码。</li>
-<li>移除匿名用户。</li>
-<li>禁止远程root登录。</li>
-<li>删除测试数据库。</li>
-<li>重新加载权限表。</li>
-</ol>
-<h4 id="5-登录MySQL"><a href="#5-登录MySQL" class="headerlink" title="5. 登录MySQL"></a>5. 登录MySQL</h4><p>安装完成后，可以使用以下命令登录MySQL</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mysql -u root -p</span><br></pre></td></tr></table></figure>
-<p>输入你设置的root密码即可进入MySQL命令行</p>
-<h4 id="6-配置远程访问（可选）"><a href="#6-配置远程访问（可选）" class="headerlink" title="6. 配置远程访问（可选）"></a>6. 配置远程访问（可选）</h4><p>如果需要从远程访问MySQL，需要修改MySQL配置文件并授权远程用户。</p>
-<h5 id="6-1-修改配置文件"><a href="#6-1-修改配置文件" class="headerlink" title="6.1 修改配置文件"></a>6.1 修改配置文件</h5><p>编辑MySQL配置文件：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /etc/mysql/mysql.conf.d/mysqld.cnf</span><br></pre></td></tr></table></figure>
-<p>找到bind-address行，将其值从127.0.0.1改为0.0.0.0（允许所有IP访问）或指定允许访问的IP地址。</p>
-<p>保存并退出，然后重启MySQL服务</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl restart mysql</span><br></pre></td></tr></table></figure>
-<h5 id="6-2-授权远程用户"><a href="#6-2-授权远程用户" class="headerlink" title="6.2 授权远程用户"></a>6.2 授权远程用户</h5><p>登录MySQL后，运行以下命令授权远程访问：</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">&#x27;username&#x27;</span>@<span class="string">&#x27;%&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;password&#x27;</span>;</span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">ALL</span> PRIVILEGES <span class="keyword">ON</span> <span class="operator">*</span>.<span class="operator">*</span> <span class="keyword">TO</span> <span class="string">&#x27;username&#x27;</span>@<span class="string">&#x27;%&#x27;</span> <span class="keyword">WITH</span> <span class="keyword">GRANT</span> OPTION;</span><br><span class="line">FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
-<p>将username和password替换为你想要的用户名和密码。</p>
-<h4 id="7-测试MySQL"><a href="#7-测试MySQL" class="headerlink" title="7. 测试MySQL"></a>7. 测试MySQL</h4><p>安装完成后，可以通过以下命令测试MySQL是否正常运行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mysql -u root -p -e <span class="string">&quot;SHOW DATABASES;&quot;</span></span><br></pre></td></tr></table></figure>
-<p>如果显示数据库列表，说明MySQL安装成功。</p>
-<h4 id="8-卸载MySQL（可选）"><a href="#8-卸载MySQL（可选）" class="headerlink" title="8. 卸载MySQL（可选）"></a>8. 卸载MySQL（可选）</h4><p>   如果需要卸载MySQL，可以运行以下命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt remove --purge mysql-server mysql-client mysql-common</span><br><span class="line"><span class="built_in">sudo</span> apt autoremove</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">rm</span> -rf /etc/mysql /var/lib/mysql</span><br></pre></td></tr></table></figure>
-<p>通过以上步骤，你应该可以在Ubuntu上成功安装并配置MySQL。如果有任何问题，请检查日志文件（&#x2F;var&#x2F;log&#x2F;mysql&#x2F;error.log）以获取更多信息。</p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>服务器部署</category>
-      </categories>
-      <tags>
-        <tag>ubuntu</tag>
-        <tag>mysql</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ubuntu安装redis</title>
     <url>/2025/02/09/ubuntu%E5%AE%89%E8%A3%85redis/</url>
     <content><![CDATA[<blockquote>
@@ -387,6 +282,112 @@
       <tags>
         <tag>ubuntu</tag>
         <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ubuntu安装mysql</title>
+    <url>/2025/02/10/ubuntu%E5%AE%89%E8%A3%85mysql/</url>
+    <content><![CDATA[<blockquote>
+<p>本文介绍如何在ubuntu上安装mysql</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h3><h4 id="1-更新apt-get源"><a href="#1-更新apt-get源" class="headerlink" title="1. 更新apt-get源"></a>1. 更新apt-get源</h4><p>首先，确保你的系统包列表是最新的</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get update</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-安装mysql"><a href="#2-安装mysql" class="headerlink" title="2. 安装mysql"></a>2. 安装mysql</h4><p>运行以下命令安装MySQL服务器</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get install mysql-server</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-启动并启用MySQL服务"><a href="#3-启动并启用MySQL服务" class="headerlink" title="3. 启动并启用MySQL服务"></a>3. 启动并启用MySQL服务</h4><p>安装完成后，MySQL服务会自动启动。你可以通过以下命令检查其状态</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl status mysql</span><br></pre></td></tr></table></figure>
+<p>如果MySQL没有自动启动，可以使用以下命令启动它</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl start mysql</span><br></pre></td></tr></table></figure>
+<p>为了让MySQL在系统启动时自动运行，启用它</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> mysql</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-运行安全脚本（推荐）"><a href="#4-运行安全脚本（推荐）" class="headerlink" title="4. 运行安全脚本（推荐）"></a>4. 运行安全脚本（推荐）</h4><p>MySQL安装后，建议运行安全脚本来设置root密码并提高安全性</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> mysql_secure_installation</span><br></pre></td></tr></table></figure>
+<ol>
+<li>按照提示完成以下操作：</li>
+<li>设置root用户的密码。</li>
+<li>移除匿名用户。</li>
+<li>禁止远程root登录。</li>
+<li>删除测试数据库。</li>
+<li>重新加载权限表。</li>
+</ol>
+<h4 id="5-登录MySQL"><a href="#5-登录MySQL" class="headerlink" title="5. 登录MySQL"></a>5. 登录MySQL</h4><p>安装完成后，可以使用以下命令登录MySQL</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mysql -u root -p</span><br></pre></td></tr></table></figure>
+<p>输入你设置的root密码即可进入MySQL命令行</p>
+<h4 id="6-配置远程访问（可选）"><a href="#6-配置远程访问（可选）" class="headerlink" title="6. 配置远程访问（可选）"></a>6. 配置远程访问（可选）</h4><p>如果需要从远程访问MySQL，需要修改MySQL配置文件并授权远程用户。</p>
+<h5 id="6-1-修改配置文件"><a href="#6-1-修改配置文件" class="headerlink" title="6.1 修改配置文件"></a>6.1 修改配置文件</h5><p>编辑MySQL配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /etc/mysql/mysql.conf.d/mysqld.cnf</span><br></pre></td></tr></table></figure>
+<p>找到bind-address行，将其值从127.0.0.1改为0.0.0.0（允许所有IP访问）或指定允许访问的IP地址。<br>保存并退出，然后重启MySQL服务</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl restart mysql</span><br></pre></td></tr></table></figure>
+<p>如果无法远程访问，执行如下命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">UPDATE mysql.user SET host=<span class="string">&#x27;%&#x27;</span> WHERE user=<span class="string">&#x27;root&#x27;</span>;</span><br><span class="line">FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
+<h5 id="6-2-授权远程用户"><a href="#6-2-授权远程用户" class="headerlink" title="6.2 授权远程用户"></a>6.2 授权远程用户</h5><p>登录MySQL后，运行以下命令授权远程访问：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">&#x27;username&#x27;</span>@<span class="string">&#x27;%&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;password&#x27;</span>;</span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">ALL</span> PRIVILEGES <span class="keyword">ON</span> <span class="operator">*</span>.<span class="operator">*</span> <span class="keyword">TO</span> <span class="string">&#x27;username&#x27;</span>@<span class="string">&#x27;%&#x27;</span> <span class="keyword">WITH</span> <span class="keyword">GRANT</span> OPTION;</span><br><span class="line">FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
+<p>将username和password替换为你想要的用户名和密码。</p>
+<h4 id="7-测试MySQL"><a href="#7-测试MySQL" class="headerlink" title="7. 测试MySQL"></a>7. 测试MySQL</h4><p>安装完成后，可以通过以下命令测试MySQL是否正常运行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mysql -u root -p -e <span class="string">&quot;SHOW DATABASES;&quot;</span></span><br></pre></td></tr></table></figure>
+<p>如果显示数据库列表，说明MySQL安装成功。</p>
+<h4 id="8-卸载MySQL（可选）"><a href="#8-卸载MySQL（可选）" class="headerlink" title="8. 卸载MySQL（可选）"></a>8. 卸载MySQL（可选）</h4><p>   如果需要卸载MySQL，可以运行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt remove --purge mysql-server mysql-client mysql-common</span><br><span class="line"><span class="built_in">sudo</span> apt autoremove</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">rm</span> -rf /etc/mysql /var/lib/mysql</span><br></pre></td></tr></table></figure>
+<p>通过以上步骤，你应该可以在Ubuntu上成功安装并配置MySQL。如果有任何问题，请检查日志文件（&#x2F;var&#x2F;log&#x2F;mysql&#x2F;error.log）以获取更多信息。</p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>服务器部署</category>
+      </categories>
+      <tags>
+        <tag>ubuntu</tag>
+        <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ubuntu安装rabbitMQ</title>
+    <url>/2025/02/09/ubuntu%E5%AE%89%E8%A3%85rabbitMQ/</url>
+    <content><![CDATA[<blockquote>
+<p>ubuntu安装rabbitMQ</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="安装RabbitMQ"><a href="#安装RabbitMQ" class="headerlink" title="安装RabbitMQ"></a>安装RabbitMQ</h3><h4 id="更新软件包列表"><a href="#更新软件包列表" class="headerlink" title="更新软件包列表"></a>更新软件包列表</h4><p>首先，确保系统包列表是最新的</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
+
+<h4 id="安装-Erlang（RabbitMQ-的依赖项）"><a href="#安装-Erlang（RabbitMQ-的依赖项）" class="headerlink" title="安装 Erlang（RabbitMQ 的依赖项）"></a>安装 Erlang（RabbitMQ 的依赖项）</h4><p>RabbitMQ 是使用 Erlang 编写的，因此需要安装 Erlang</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt install erlang</span><br></pre></td></tr></table></figure>
+
+<h4 id="添加-RabbitMQ-仓库"><a href="#添加-RabbitMQ-仓库" class="headerlink" title="添加 RabbitMQ 仓库"></a>添加 RabbitMQ 仓库</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo &quot;deb https://dl.bintray.com/rabbitmq/debian bionic main&quot; | sudo tee /etc/apt/sources.list.d/bintray.rabbitmq.list</span><br></pre></td></tr></table></figure>
+
+<p>添加 RabbitMQ 公钥  </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget -O- https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | sudo apt-key add -</span><br></pre></td></tr></table></figure>
+<p>再次更新软件包列表  </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
+<h4 id="安装-RabbitMQ"><a href="#安装-RabbitMQ" class="headerlink" title="安装 RabbitMQ"></a>安装 RabbitMQ</h4><p>使用以下命令安装 RabbitMQ  </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt install rabbitmq-server</span><br></pre></td></tr></table></figure>
+
+<h4 id="启用并启动-RabbitMQ-服务"><a href="#启用并启动-RabbitMQ-服务" class="headerlink" title="启用并启动 RabbitMQ 服务"></a>启用并启动 RabbitMQ 服务</h4><p>启用 RabbitMQ 服务并在系统启动时启动它  </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl enable rabbitmq-server</span><br><span class="line">sudo systemctl start rabbitmq-server</span><br></pre></td></tr></table></figure>
+
+<h4 id="检查-RabbitMQ-的状态"><a href="#检查-RabbitMQ-的状态" class="headerlink" title="检查 RabbitMQ 的状态"></a>检查 RabbitMQ 的状态</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl status rabbitmq-server</span><br></pre></td></tr></table></figure>
+
+<h4 id="设置-RabbitMQ-的管理用户"><a href="#设置-RabbitMQ-的管理用户" class="headerlink" title="设置 RabbitMQ 的管理用户"></a>设置 RabbitMQ 的管理用户</h4><p>使用以下命令设置 RabbitMQ 的管理用户  </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo rabbitmqctl add_user admin password</span><br></pre></td></tr></table></figure>
+
+<h4 id="修改-RabbitMQ-端口号"><a href="#修改-RabbitMQ-端口号" class="headerlink" title="修改 RabbitMQ 端口号"></a>修改 RabbitMQ 端口号</h4><p>默认情况下，RabbitMQ 使用 5672 端口。如果需要更改端口号，请编辑配置文件  </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo nano /etc/rabbitmq/rabbitmq.conf</span><br></pre></td></tr></table></figure>
+<p>在文件中添加以下行，将端口号更改为 5673  </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">监听端口</span></span><br><span class="line">listeners.tcp.port = 5673</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">管理界面端口</span></span><br><span class="line">management.tcp.port = 15673</span><br></pre></td></tr></table></figure>
+
+<p>通过以上步骤，您将在 Ubuntu 系统上安装并运行 RabbitMQ。</p>
+]]></content>
+      <categories>
+        <category>服务器部署</category>
+      </categories>
+      <tags>
+        <tag>ubuntu</tag>
+        <tag>rabbitMQ</tag>
       </tags>
   </entry>
 </search>
