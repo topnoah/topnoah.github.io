@@ -83,47 +83,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux服务器基础设置</title>
-    <url>/2025/02/10/linux%E9%83%A8%E7%BD%B2%E7%9B%B8%E5%85%B3/</url>
-    <content><![CDATA[<blockquote>
-<p>设置端口允许IP访问，免密登录，端口占用查询。</p>
-</blockquote>
-<span id="more"></span>
-
-<h3 id="设置端口允许IP访问"><a href="#设置端口允许IP访问" class="headerlink" title="设置端口允许IP访问"></a>设置端口允许IP访问</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">允许IP 104.168.76.12 访问 9529 端口</span></span><br><span class="line">firewall-cmd --permanent --add-rich-rule=&quot;rule family=&quot;ipv4&quot; source address=&quot;104.168.76.12&quot; port protocol=&quot;tcp&quot; port=&quot;9529&quot; accept&quot;</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">重新载入一下防火墙设置，使设置生效</span></span><br><span class="line">firewall-cmd --reload</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">查看已设置规则</span></span><br><span class="line">firewall-cmd --zone=public --list-rich-rules</span><br></pre></td></tr></table></figure>
-
-<h3 id="免密登录"><a href="#免密登录" class="headerlink" title="免密登录"></a>免密登录</h3><h5 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C topnoah@gmail.com&quot;</span><br></pre></td></tr></table></figure>
-
-<h5 id="复制到Linux服务器"><a href="#复制到Linux服务器" class="headerlink" title="复制到Linux服务器"></a>复制到Linux服务器</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">type id_rsa.pub | ssh root@远程服务器 &quot;cat &gt;&gt; .ssh/authorized_keys&quot;</span><br></pre></td></tr></table></figure>
-
-<!-- more -->
-
-<h5 id="复制公钥到指定服务器"><a href="#复制公钥到指定服务器" class="headerlink" title="复制公钥到指定服务器"></a>复制公钥到指定服务器</h5><p>可以直接将本地公钥复制到指定服务器</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-copy-id root@vps-ubuntu</span><br></pre></td></tr></table></figure>
-
-<h5 id="端口占用查询"><a href="#端口占用查询" class="headerlink" title="端口占用查询"></a>端口占用查询</h5><p>查看所有的服务端口（LISTEN，ESTABLISHED）</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">netstat -ap</span><br></pre></td></tr></table></figure>
-
-<p>查看指定端口，可以结合grep命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">netstat -ap | grep 8080</span><br></pre></td></tr></table></figure>
-
-<p>也可以使用lsof命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">lsof -i:8888</span><br></pre></td></tr></table></figure>
-
-<p>若要关闭使用这个端口的程序，使用kill + 对应的pid</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kill -9 PID</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>服务器部署</category>
-      </categories>
-      <tags>
-        <tag>ubuntu</tag>
-        <tag>debian</tag>
-        <tag>port</tag>
-        <tag>ssh</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Ubuntu安装Docker和docker-compose</title>
     <url>/2025/02/10/linux%E5%AE%89%E8%A3%85docker%E5%92%8Cdocker-compose/</url>
     <content><![CDATA[<blockquote>
@@ -225,63 +184,44 @@
       </tags>
   </entry>
   <entry>
-    <title>ubuntu安装redis</title>
-    <url>/2025/02/09/ubuntu%E5%AE%89%E8%A3%85redis/</url>
+    <title>Linux服务器基础设置</title>
+    <url>/2025/02/10/linux%E9%83%A8%E7%BD%B2%E7%9B%B8%E5%85%B3/</url>
     <content><![CDATA[<blockquote>
-<p>ubuntu安装redis</p>
+<p>设置端口允许IP访问，免密登录，端口占用查询。</p>
 </blockquote>
 <span id="more"></span>
 
-<h4 id="安装redis"><a href="#安装redis" class="headerlink" title="安装redis"></a>安装redis</h4><h4 id="1-更新系统包列表"><a href="#1-更新系统包列表" class="headerlink" title="1. 更新系统包列表"></a>1. 更新系统包列表</h4><p>首先，确保系统包列表是最新的：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
+<h3 id="设置端口允许IP访问"><a href="#设置端口允许IP访问" class="headerlink" title="设置端口允许IP访问"></a>设置端口允许IP访问</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">允许IP 104.168.76.12 访问 9529 端口</span></span><br><span class="line">firewall-cmd --permanent --add-rich-rule=&quot;rule family=&quot;ipv4&quot; source address=&quot;104.168.76.12&quot; port protocol=&quot;tcp&quot; port=&quot;9529&quot; accept&quot;</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">重新载入一下防火墙设置，使设置生效</span></span><br><span class="line">firewall-cmd --reload</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">查看已设置规则</span></span><br><span class="line">firewall-cmd --zone=public --list-rich-rules</span><br></pre></td></tr></table></figure>
 
-<h4 id="2-安装Redis"><a href="#2-安装Redis" class="headerlink" title="2. 安装Redis"></a>2. 安装Redis</h4><p>使用以下命令安装Redis：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt install redis-server</span><br></pre></td></tr></table></figure>
+<h3 id="免密登录"><a href="#免密登录" class="headerlink" title="免密登录"></a>免密登录</h3><h5 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C topnoah@gmail.com&quot;</span><br></pre></td></tr></table></figure>
 
-<h4 id="3-启动Redis服务"><a href="#3-启动Redis服务" class="headerlink" title="3. 启动Redis服务"></a>3. 启动Redis服务</h4><p>安装完成后，Redis服务会自动启动。可以使用以下命令来检查Redis服务的状态：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl status redis-server</span><br></pre></td></tr></table></figure>
-<p>如果服务没有自动启动，可以手动启动它：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl start redis-server</span><br></pre></td></tr></table></figure>
-<h4 id="4-设置Redis开机自启"><a href="#4-设置Redis开机自启" class="headerlink" title="4. 设置Redis开机自启"></a>4. 设置Redis开机自启</h4><p>为了确保Redis在系统启动时自动启动，可以启用它的自启动：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl enable redis-server</span><br></pre></td></tr></table></figure>
+<h5 id="复制到Linux服务器"><a href="#复制到Linux服务器" class="headerlink" title="复制到Linux服务器"></a>复制到Linux服务器</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">type id_rsa.pub | ssh root@远程服务器 &quot;cat &gt;&gt; .ssh/authorized_keys&quot;</span><br></pre></td></tr></table></figure>
 
-<h4 id="5-测试Redis"><a href="#5-测试Redis" class="headerlink" title="5. 测试Redis"></a>5. 测试Redis</h4><p>可以使用Redis自带的命令行工具redis-cli来测试Redis是否正常工作：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">redis-cli</span><br></pre></td></tr></table></figure>
-<p>在Redis命令行中，输入ping，如果返回PONG，说明Redis工作正常：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; ping</span><br><span class="line">PONG</span><br></pre></td></tr></table></figure>
-<p>PONG</p>
-<h4 id="6-配置Redis（可选）"><a href="#6-配置Redis（可选）" class="headerlink" title="6. 配置Redis（可选）"></a>6. 配置Redis（可选）</h4><p>Redis的配置文件位于&#x2F;etc&#x2F;redis&#x2F;redis.conf。可以根据需要编辑此文件来更改Redis的配置。例如，你可以更改绑定的IP地址、端口号、设置密码等。</p>
-<p>编辑配置文件：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo nano /etc/redis/redis.conf</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>默认情况下，Redis只允许本地访问。如果需要从远程访问Redis，可以编辑配置文件&#x2F;etc&#x2F;redis&#x2F;redis.conf<br>找到bind，将其注释掉：</p>
-  <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="comment"># bind 127.0.0.1</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>关闭保护，找到protected-mode，将其改为no：</p>
-  <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">protected</span>-mode no</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改端口，找到port，将其改为你想要的端口号：</p>
-  <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">port</span> <span class="number">6379</span></span><br></pre></td></tr></table></figure></li>
-<li><p>设置密码，找到requirepass，将其改为你想要的密码：</p>
-  <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">requirepass</span> yourpassword</span><br></pre></td></tr></table></figure></li>
-</ul>
-<p>修改后，重启Redis服务以使更改生效：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl restart redis-server</span><br></pre></td></tr></table></figure>
+<!-- more -->
 
-<h4 id="7-防火墙配置（可选）"><a href="#7-防火墙配置（可选）" class="headerlink" title="7. 防火墙配置（可选）"></a>7. 防火墙配置（可选）</h4><p>如果服务器启用了防火墙，你需要允许Redis的端口（默认是6379）通过防火墙：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo ufw allow 6379/tcp</span><br></pre></td></tr></table></figure>
+<h5 id="复制公钥到指定服务器"><a href="#复制公钥到指定服务器" class="headerlink" title="复制公钥到指定服务器"></a>复制公钥到指定服务器</h5><p>可以直接将本地公钥复制到指定服务器</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-copy-id root@vps-ubuntu</span><br></pre></td></tr></table></figure>
 
+<h5 id="端口占用查询"><a href="#端口占用查询" class="headerlink" title="端口占用查询"></a>端口占用查询</h5><p>查看所有的服务端口（LISTEN，ESTABLISHED）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">netstat -ap</span><br></pre></td></tr></table></figure>
 
-<h4 id="8-卸载Redis（可选）"><a href="#8-卸载Redis（可选）" class="headerlink" title="8. 卸载Redis（可选）"></a>8. 卸载Redis（可选）</h4><p>如果不再需要Redis，可以使用以下命令卸载它：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt remove --purge redis-server</span><br></pre></td></tr></table></figure>
-<p>这将删除Redis及其配置文件。</p>
+<p>查看指定端口，可以结合grep命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">netstat -ap | grep 8080</span><br></pre></td></tr></table></figure>
+
+<p>也可以使用lsof命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">lsof -i:8888</span><br></pre></td></tr></table></figure>
+
+<p>若要关闭使用这个端口的程序，使用kill + 对应的pid</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kill -9 PID</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>服务器部署</category>
       </categories>
       <tags>
         <tag>ubuntu</tag>
-        <tag>redis</tag>
+        <tag>debian</tag>
+        <tag>port</tag>
+        <tag>ssh</tag>
       </tags>
   </entry>
   <entry>
@@ -292,7 +232,8 @@
 </blockquote>
 <span id="more"></span>
 
-<h3 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h3><h4 id="1-更新apt-get源"><a href="#1-更新apt-get源" class="headerlink" title="1. 更新apt-get源"></a>1. 更新apt-get源</h4><p>首先，确保你的系统包列表是最新的</p>
+
+<h4 id="1-更新apt-get源"><a href="#1-更新apt-get源" class="headerlink" title="1. 更新apt-get源"></a>1. 更新apt-get源</h4><p>首先，确保你的系统包列表是最新的</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get update</span><br></pre></td></tr></table></figure>
 
 <h4 id="2-安装mysql"><a href="#2-安装mysql" class="headerlink" title="2. 安装mysql"></a>2. 安装mysql</h4><p>运行以下命令安装MySQL服务器</p>
@@ -388,6 +329,66 @@
       <tags>
         <tag>ubuntu</tag>
         <tag>rabbitMQ</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ubuntu安装redis</title>
+    <url>/2025/02/09/ubuntu%E5%AE%89%E8%A3%85redis/</url>
+    <content><![CDATA[<blockquote>
+<p>ubuntu安装redis</p>
+</blockquote>
+<span id="more"></span>
+
+<h4 id="安装redis"><a href="#安装redis" class="headerlink" title="安装redis"></a>安装redis</h4><h4 id="1-更新系统包列表"><a href="#1-更新系统包列表" class="headerlink" title="1. 更新系统包列表"></a>1. 更新系统包列表</h4><p>首先，确保系统包列表是最新的：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-安装Redis"><a href="#2-安装Redis" class="headerlink" title="2. 安装Redis"></a>2. 安装Redis</h4><p>使用以下命令安装Redis：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt install redis-server</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-启动Redis服务"><a href="#3-启动Redis服务" class="headerlink" title="3. 启动Redis服务"></a>3. 启动Redis服务</h4><p>安装完成后，Redis服务会自动启动。可以使用以下命令来检查Redis服务的状态：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl status redis-server</span><br></pre></td></tr></table></figure>
+<p>如果服务没有自动启动，可以手动启动它：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl start redis-server</span><br></pre></td></tr></table></figure>
+<h4 id="4-设置Redis开机自启"><a href="#4-设置Redis开机自启" class="headerlink" title="4. 设置Redis开机自启"></a>4. 设置Redis开机自启</h4><p>为了确保Redis在系统启动时自动启动，可以启用它的自启动：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl enable redis-server</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-测试Redis"><a href="#5-测试Redis" class="headerlink" title="5. 测试Redis"></a>5. 测试Redis</h4><p>可以使用Redis自带的命令行工具redis-cli来测试Redis是否正常工作：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">redis-cli</span><br></pre></td></tr></table></figure>
+<p>在Redis命令行中，输入ping，如果返回PONG，说明Redis工作正常：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; ping</span><br><span class="line">PONG</span><br></pre></td></tr></table></figure>
+<p>PONG</p>
+<h4 id="6-配置Redis（可选）"><a href="#6-配置Redis（可选）" class="headerlink" title="6. 配置Redis（可选）"></a>6. 配置Redis（可选）</h4><p>Redis的配置文件位于&#x2F;etc&#x2F;redis&#x2F;redis.conf。可以根据需要编辑此文件来更改Redis的配置。例如，你可以更改绑定的IP地址、端口号、设置密码等。</p>
+<p>编辑配置文件：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo nano /etc/redis/redis.conf</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>默认情况下，Redis只允许本地访问。如果需要从远程访问Redis，可以编辑配置文件&#x2F;etc&#x2F;redis&#x2F;redis.conf<br>找到bind，将其注释掉：</p>
+  <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="comment"># bind 127.0.0.1</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>关闭保护，找到protected-mode，将其改为no：</p>
+  <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">protected</span>-mode no</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改端口，找到port，将其改为你想要的端口号：</p>
+  <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">port</span> <span class="number">6379</span></span><br></pre></td></tr></table></figure></li>
+<li><p>设置密码，找到requirepass，将其改为你想要的密码：</p>
+  <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">requirepass</span> yourpassword</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>修改后，重启Redis服务以使更改生效：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl restart redis-server</span><br></pre></td></tr></table></figure>
+
+<h4 id="7-防火墙配置（可选）"><a href="#7-防火墙配置（可选）" class="headerlink" title="7. 防火墙配置（可选）"></a>7. 防火墙配置（可选）</h4><p>如果服务器启用了防火墙，你需要允许Redis的端口（默认是6379）通过防火墙：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo ufw allow 6379/tcp</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="8-卸载Redis（可选）"><a href="#8-卸载Redis（可选）" class="headerlink" title="8. 卸载Redis（可选）"></a>8. 卸载Redis（可选）</h4><p>如果不再需要Redis，可以使用以下命令卸载它：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt remove --purge redis-server</span><br></pre></td></tr></table></figure>
+<p>这将删除Redis及其配置文件。</p>
+]]></content>
+      <categories>
+        <category>服务器部署</category>
+      </categories>
+      <tags>
+        <tag>ubuntu</tag>
+        <tag>redis</tag>
       </tags>
   </entry>
 </search>
