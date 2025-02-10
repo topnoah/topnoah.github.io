@@ -69,10 +69,14 @@ mysql -u root -p
 sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
 ```
 找到bind-address行，将其值从127.0.0.1改为0.0.0.0（允许所有IP访问）或指定允许访问的IP地址。
-
 保存并退出，然后重启MySQL服务
 ```bash
 sudo systemctl restart mysql
+```
+如果无法远程访问，执行如下命令
+```bash
+UPDATE mysql.user SET host='%' WHERE user='root';
+FLUSH PRIVILEGES;
 ```
 ##### 6.2 授权远程用户
 登录MySQL后，运行以下命令授权远程访问：
