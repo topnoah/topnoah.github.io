@@ -67,8 +67,14 @@ mysql -u root -p
 ```bash
 sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
 ```
+```sql
+# 以下是mysqld.cnf文件的示例
+[mysqld]
+bind-address = 0.0.0.0
+port = 3307
+```
 找到bind-address行，将其值从127.0.0.1改为0.0.0.0（允许所有IP访问）或指定允许访问的IP地址。
-保存并退出，然后重启MySQL服务
+保存并退出，然后重启MySQL服务。要修改端口号，可以在配置文件中找到port行，将其值改为你想要的端口号。
 ```bash
 sudo systemctl restart mysql
 ```
