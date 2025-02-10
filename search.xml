@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>ubuntu(debian) Apache2多端口部署</title>
+    <url>/2025/02/10/linux%E5%AE%89%E8%A3%85apache2/</url>
+    <content><![CDATA[<blockquote>
+<p>Linux Apache2多端口，多项目部署。</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="Linux-Apache2多端口部署"><a href="#Linux-Apache2多端口部署" class="headerlink" title="Linux Apache2多端口部署"></a>Linux Apache2多端口部署</h3><h4 id="安装Apache2"><a href="#安装Apache2" class="headerlink" title="安装Apache2"></a>安装Apache2</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install apache2</span><br></pre></td></tr></table></figure>
+
+<h4 id="找到ports-conf文件"><a href="#找到ports-conf文件" class="headerlink" title="找到ports.conf文件"></a>找到ports.conf文件</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /etc/apache2</span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">root@nine:~# cd /etc/apache2/</span><br><span class="line">root@nine:/etc/apache2# ls</span><br><span class="line">apache2.conf    conf-enabled  magic           mods-enabled  sites-available</span><br><span class="line">conf-available  envvars       mods-available  ports.conf    sites-enabled</span><br></pre></td></tr></table></figure>
+
+<h4 id="编辑ports-conf文件"><a href="#编辑ports-conf文件" class="headerlink" title="编辑ports.conf文件"></a>编辑ports.conf文件</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim ports.conf</span><br></pre></td></tr></table></figure>
+
+<h4 id="添加端口，如下"><a href="#添加端口，如下" class="headerlink" title="添加端口，如下"></a>添加端口，如下</h4><figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="comment"># If you just change the port or add more ports here, you will likely also</span></span><br><span class="line"><span class="comment"># have to change the VirtualHost statement in</span></span><br><span class="line"><span class="comment"># /etc/apache2/sites-enabled/000-default.conf</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sports-memory</span></span><br><span class="line"><span class="attribute">Listen</span> <span class="number">23106</span></span><br><span class="line"><span class="comment"># blog</span></span><br><span class="line"><span class="attribute">Listen</span> <span class="number">23107</span></span><br><span class="line"><span class="comment"># wprdpress</span></span><br><span class="line"><span class="attribute">Listen</span> <span class="number">23108</span></span><br><span class="line"></span><br><span class="line"><span class="section">&lt;IfModule ssl_module&gt;</span></span><br><span class="line">        <span class="attribute">Listen</span> <span class="number">443</span></span><br><span class="line"><span class="section">&lt;/IfModule&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="section">&lt;IfModule mod_gnutls.c&gt;</span></span><br><span class="line">        <span class="attribute">Listen</span> <span class="number">443</span></span><br><span class="line"><span class="section">&lt;/IfModule&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># vim: syntax=apache ts=4 sw=4 sts=4 sr noet</span></span><br><span class="line">~                                                                                                           ~     </span><br></pre></td></tr></table></figure>
+
+<p>添加后，保存退出（<code>:wq</code>）</p>
+<h4 id="添加站点（sites-available）"><a href="#添加站点（sites-available）" class="headerlink" title="添加站点（sites.available）"></a>添加站点（sites.available）</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd sites-available/</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">root@nine:/etc/apache2# cd sites-available/</span><br><span class="line">root@nine:/etc/apache2/sites-available# ls</span><br><span class="line">000-default.conf  default-ssl.conf</span><br></pre></td></tr></table></figure>
+
+<p>编辑站点</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim 000-default.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="section">&lt;VirtualHost *<span class="number">:23106</span>&gt;</span></span><br><span class="line">        <span class="attribute">ServerAdmin</span> webmaster@localhost</span><br><span class="line">        <span class="attribute">DocumentRoot</span> /var/www/html</span><br><span class="line">        <span class="attribute">ErrorLog</span> <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/error.log</span><br><span class="line">        <span class="attribute">CustomLog</span> <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/access.log combined</span><br><span class="line"><span class="section">&lt;/VirtualHost&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="section">&lt;VirtualHost *<span class="number">:23107</span>&gt;</span></span><br><span class="line">        <span class="attribute">ServerAdmin</span> webmaster2@localhost</span><br><span class="line">        <span class="attribute">DocumentRoot</span> /var/www/blog/dist</span><br><span class="line">        <span class="attribute">ErrorLog</span> <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/error.log</span><br><span class="line">        <span class="attribute">CustomLog</span> <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/access.log combined</span><br><span class="line"><span class="section">&lt;/VirtualHost&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="section">&lt;VirtualHost *<span class="number">:23108</span>&gt;</span></span><br><span class="line">        <span class="attribute">ServerAdmin</span> webmaster3@localhost</span><br><span class="line">        <span class="attribute">DocumentRoot</span> /var/www/wordpress</span><br><span class="line">        <span class="attribute">ErrorLog</span> <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/error.log</span><br><span class="line">        <span class="attribute">CustomLog</span> <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/access.log combined</span><br><span class="line"><span class="section">&lt;/VirtualHost&gt;</span></span><br></pre></td></tr></table></figure>
+<p>编辑完成后，保存退出（<code>:wq</code>）</p>
+<h4 id="重启Apache2服务"><a href="#重启Apache2服务" class="headerlink" title="重启Apache2服务"></a>重启Apache2服务</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">systemctl restart apache2</span><br></pre></td></tr></table></figure>
+
+<h4 id="卸载apache2"><a href="#卸载apache2" class="headerlink" title="卸载apache2"></a>卸载apache2</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">apt remove apache2</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>服务器部署</category>
+      </categories>
+      <tags>
+        <tag>ubuntu</tag>
+        <tag>debian</tag>
+        <tag>apache2</tag>
+        <tag>port</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>linux-docker部署项目</title>
     <url>/2025/02/07/linux-docker%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/</url>
     <content><![CDATA[<blockquote>
@@ -175,10 +218,56 @@
         <category>服务器部署</category>
       </categories>
       <tags>
-        <tag>debian</tag>
         <tag>ubuntu</tag>
+        <tag>debian</tag>
         <tag>port</tag>
         <tag>ssh</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ubuntu安装rabbitMQ</title>
+    <url>/2025/02/09/ubuntu%E5%AE%89%E8%A3%85rabbitMQ/</url>
+    <content><![CDATA[<blockquote>
+<p>ubuntu安装rabbitMQ</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="安装RabbitMQ"><a href="#安装RabbitMQ" class="headerlink" title="安装RabbitMQ"></a>安装RabbitMQ</h3><h4 id="更新软件包列表"><a href="#更新软件包列表" class="headerlink" title="更新软件包列表"></a>更新软件包列表</h4><p>首先，确保系统包列表是最新的</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
+
+<h4 id="安装-Erlang（RabbitMQ-的依赖项）"><a href="#安装-Erlang（RabbitMQ-的依赖项）" class="headerlink" title="安装 Erlang（RabbitMQ 的依赖项）"></a>安装 Erlang（RabbitMQ 的依赖项）</h4><p>RabbitMQ 是使用 Erlang 编写的，因此需要安装 Erlang</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt install erlang</span><br></pre></td></tr></table></figure>
+
+<h4 id="添加-RabbitMQ-仓库"><a href="#添加-RabbitMQ-仓库" class="headerlink" title="添加 RabbitMQ 仓库"></a>添加 RabbitMQ 仓库</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo &quot;deb https://dl.bintray.com/rabbitmq/debian bionic main&quot; | sudo tee /etc/apt/sources.list.d/bintray.rabbitmq.list</span><br></pre></td></tr></table></figure>
+
+<p>添加 RabbitMQ 公钥  </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget -O- https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | sudo apt-key add -</span><br></pre></td></tr></table></figure>
+<p>再次更新软件包列表  </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
+<h4 id="安装-RabbitMQ"><a href="#安装-RabbitMQ" class="headerlink" title="安装 RabbitMQ"></a>安装 RabbitMQ</h4><p>使用以下命令安装 RabbitMQ  </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt install rabbitmq-server</span><br></pre></td></tr></table></figure>
+
+<h4 id="启用并启动-RabbitMQ-服务"><a href="#启用并启动-RabbitMQ-服务" class="headerlink" title="启用并启动 RabbitMQ 服务"></a>启用并启动 RabbitMQ 服务</h4><p>启用 RabbitMQ 服务并在系统启动时启动它  </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl enable rabbitmq-server</span><br><span class="line">sudo systemctl start rabbitmq-server</span><br></pre></td></tr></table></figure>
+
+<h4 id="检查-RabbitMQ-的状态"><a href="#检查-RabbitMQ-的状态" class="headerlink" title="检查 RabbitMQ 的状态"></a>检查 RabbitMQ 的状态</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl status rabbitmq-server</span><br></pre></td></tr></table></figure>
+
+<h4 id="设置-RabbitMQ-的管理用户"><a href="#设置-RabbitMQ-的管理用户" class="headerlink" title="设置 RabbitMQ 的管理用户"></a>设置 RabbitMQ 的管理用户</h4><p>使用以下命令设置 RabbitMQ 的管理用户  </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo rabbitmqctl add_user admin password</span><br></pre></td></tr></table></figure>
+
+<h4 id="修改-RabbitMQ-端口号"><a href="#修改-RabbitMQ-端口号" class="headerlink" title="修改 RabbitMQ 端口号"></a>修改 RabbitMQ 端口号</h4><p>默认情况下，RabbitMQ 使用 5672 端口。如果需要更改端口号，请编辑配置文件  </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo nano /etc/rabbitmq/rabbitmq.conf</span><br></pre></td></tr></table></figure>
+<p>在文件中添加以下行，将端口号更改为 5673  </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">监听端口</span></span><br><span class="line">listeners.tcp.port = 5673</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">管理界面端口</span></span><br><span class="line">management.tcp.port = 15673</span><br></pre></td></tr></table></figure>
+
+<p>通过以上步骤，您将在 Ubuntu 系统上安装并运行 RabbitMQ。</p>
+]]></content>
+      <categories>
+        <category>服务器部署</category>
+      </categories>
+      <tags>
+        <tag>ubuntu</tag>
+        <tag>rabbitMQ</tag>
       </tags>
   </entry>
   <entry>
@@ -238,95 +327,6 @@
       <tags>
         <tag>ubuntu</tag>
         <tag>mysql</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ubuntu(debian) Apache2多端口部署</title>
-    <url>/2025/02/10/linux%E5%AE%89%E8%A3%85apache2/</url>
-    <content><![CDATA[<blockquote>
-<p>Linux Apache2多端口，多项目部署。</p>
-</blockquote>
-<span id="more"></span>
-
-<h3 id="Linux-Apache2多端口部署"><a href="#Linux-Apache2多端口部署" class="headerlink" title="Linux Apache2多端口部署"></a>Linux Apache2多端口部署</h3><h4 id="安装Apache2"><a href="#安装Apache2" class="headerlink" title="安装Apache2"></a>安装Apache2</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install apache2</span><br></pre></td></tr></table></figure>
-
-<h4 id="找到ports-conf文件"><a href="#找到ports-conf文件" class="headerlink" title="找到ports.conf文件"></a>找到ports.conf文件</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /etc/apache2</span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">root@nine:~# cd /etc/apache2/</span><br><span class="line">root@nine:/etc/apache2# ls</span><br><span class="line">apache2.conf    conf-enabled  magic           mods-enabled  sites-available</span><br><span class="line">conf-available  envvars       mods-available  ports.conf    sites-enabled</span><br></pre></td></tr></table></figure>
-
-<h4 id="编辑ports-conf文件"><a href="#编辑ports-conf文件" class="headerlink" title="编辑ports.conf文件"></a>编辑ports.conf文件</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim ports.conf</span><br></pre></td></tr></table></figure>
-
-<h4 id="添加端口，如下"><a href="#添加端口，如下" class="headerlink" title="添加端口，如下"></a>添加端口，如下</h4><figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="comment"># If you just change the port or add more ports here, you will likely also</span></span><br><span class="line"><span class="comment"># have to change the VirtualHost statement in</span></span><br><span class="line"><span class="comment"># /etc/apache2/sites-enabled/000-default.conf</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sports-memory</span></span><br><span class="line"><span class="attribute">Listen</span> <span class="number">23106</span></span><br><span class="line"><span class="comment"># blog</span></span><br><span class="line"><span class="attribute">Listen</span> <span class="number">23107</span></span><br><span class="line"><span class="comment"># wprdpress</span></span><br><span class="line"><span class="attribute">Listen</span> <span class="number">23108</span></span><br><span class="line"></span><br><span class="line"><span class="section">&lt;IfModule ssl_module&gt;</span></span><br><span class="line">        <span class="attribute">Listen</span> <span class="number">443</span></span><br><span class="line"><span class="section">&lt;/IfModule&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="section">&lt;IfModule mod_gnutls.c&gt;</span></span><br><span class="line">        <span class="attribute">Listen</span> <span class="number">443</span></span><br><span class="line"><span class="section">&lt;/IfModule&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># vim: syntax=apache ts=4 sw=4 sts=4 sr noet</span></span><br><span class="line">~                                                                                                           ~     </span><br></pre></td></tr></table></figure>
-
-<p>添加后，保存退出（<code>:wq</code>）</p>
-<h4 id="添加站点（sites-available）"><a href="#添加站点（sites-available）" class="headerlink" title="添加站点（sites.available）"></a>添加站点（sites.available）</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd sites-available/</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">root@nine:/etc/apache2# cd sites-available/</span><br><span class="line">root@nine:/etc/apache2/sites-available# ls</span><br><span class="line">000-default.conf  default-ssl.conf</span><br></pre></td></tr></table></figure>
-
-<p>编辑站点</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim 000-default.conf</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="section">&lt;VirtualHost *<span class="number">:23106</span>&gt;</span></span><br><span class="line">        <span class="attribute">ServerAdmin</span> webmaster@localhost</span><br><span class="line">        <span class="attribute">DocumentRoot</span> /var/www/html</span><br><span class="line">        <span class="attribute">ErrorLog</span> <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/error.log</span><br><span class="line">        <span class="attribute">CustomLog</span> <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/access.log combined</span><br><span class="line"><span class="section">&lt;/VirtualHost&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="section">&lt;VirtualHost *<span class="number">:23107</span>&gt;</span></span><br><span class="line">        <span class="attribute">ServerAdmin</span> webmaster2@localhost</span><br><span class="line">        <span class="attribute">DocumentRoot</span> /var/www/blog/dist</span><br><span class="line">        <span class="attribute">ErrorLog</span> <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/error.log</span><br><span class="line">        <span class="attribute">CustomLog</span> <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/access.log combined</span><br><span class="line"><span class="section">&lt;/VirtualHost&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="section">&lt;VirtualHost *<span class="number">:23108</span>&gt;</span></span><br><span class="line">        <span class="attribute">ServerAdmin</span> webmaster3@localhost</span><br><span class="line">        <span class="attribute">DocumentRoot</span> /var/www/wordpress</span><br><span class="line">        <span class="attribute">ErrorLog</span> <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/error.log</span><br><span class="line">        <span class="attribute">CustomLog</span> <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/access.log combined</span><br><span class="line"><span class="section">&lt;/VirtualHost&gt;</span></span><br></pre></td></tr></table></figure>
-<p>编辑完成后，保存退出（<code>:wq</code>）</p>
-<h4 id="重启Apache2服务"><a href="#重启Apache2服务" class="headerlink" title="重启Apache2服务"></a>重启Apache2服务</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">systemctl restart apache2</span><br></pre></td></tr></table></figure>
-
-<h4 id="卸载apache2"><a href="#卸载apache2" class="headerlink" title="卸载apache2"></a>卸载apache2</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">apt remove apache2</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>服务器部署</category>
-      </categories>
-      <tags>
-        <tag>debian</tag>
-        <tag>ubuntu</tag>
-        <tag>port</tag>
-        <tag>apache2</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ubuntu安装rabbitMQ</title>
-    <url>/2025/02/09/ubuntu%E5%AE%89%E8%A3%85rabbitMQ/</url>
-    <content><![CDATA[<blockquote>
-<p>ubuntu安装rabbitMQ</p>
-</blockquote>
-<span id="more"></span>
-
-<h3 id="安装RabbitMQ"><a href="#安装RabbitMQ" class="headerlink" title="安装RabbitMQ"></a>安装RabbitMQ</h3><h4 id="更新软件包列表"><a href="#更新软件包列表" class="headerlink" title="更新软件包列表"></a>更新软件包列表</h4><p>首先，确保系统包列表是最新的</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
-
-<h4 id="安装-Erlang（RabbitMQ-的依赖项）"><a href="#安装-Erlang（RabbitMQ-的依赖项）" class="headerlink" title="安装 Erlang（RabbitMQ 的依赖项）"></a>安装 Erlang（RabbitMQ 的依赖项）</h4><p>RabbitMQ 是使用 Erlang 编写的，因此需要安装 Erlang</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt install erlang</span><br></pre></td></tr></table></figure>
-
-<h4 id="添加-RabbitMQ-仓库"><a href="#添加-RabbitMQ-仓库" class="headerlink" title="添加 RabbitMQ 仓库"></a>添加 RabbitMQ 仓库</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo &quot;deb https://dl.bintray.com/rabbitmq/debian bionic main&quot; | sudo tee /etc/apt/sources.list.d/bintray.rabbitmq.list</span><br></pre></td></tr></table></figure>
-
-<p>添加 RabbitMQ 公钥  </p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget -O- https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | sudo apt-key add -</span><br></pre></td></tr></table></figure>
-<p>再次更新软件包列表  </p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
-<h4 id="安装-RabbitMQ"><a href="#安装-RabbitMQ" class="headerlink" title="安装 RabbitMQ"></a>安装 RabbitMQ</h4><p>使用以下命令安装 RabbitMQ  </p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt install rabbitmq-server</span><br></pre></td></tr></table></figure>
-
-<h4 id="启用并启动-RabbitMQ-服务"><a href="#启用并启动-RabbitMQ-服务" class="headerlink" title="启用并启动 RabbitMQ 服务"></a>启用并启动 RabbitMQ 服务</h4><p>启用 RabbitMQ 服务并在系统启动时启动它  </p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl enable rabbitmq-server</span><br><span class="line">sudo systemctl start rabbitmq-server</span><br></pre></td></tr></table></figure>
-
-<h4 id="检查-RabbitMQ-的状态"><a href="#检查-RabbitMQ-的状态" class="headerlink" title="检查 RabbitMQ 的状态"></a>检查 RabbitMQ 的状态</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl status rabbitmq-server</span><br></pre></td></tr></table></figure>
-
-<h4 id="设置-RabbitMQ-的管理用户"><a href="#设置-RabbitMQ-的管理用户" class="headerlink" title="设置 RabbitMQ 的管理用户"></a>设置 RabbitMQ 的管理用户</h4><p>使用以下命令设置 RabbitMQ 的管理用户  </p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo rabbitmqctl add_user admin password</span><br></pre></td></tr></table></figure>
-
-<h4 id="修改-RabbitMQ-端口号"><a href="#修改-RabbitMQ-端口号" class="headerlink" title="修改 RabbitMQ 端口号"></a>修改 RabbitMQ 端口号</h4><p>默认情况下，RabbitMQ 使用 5672 端口。如果需要更改端口号，请编辑配置文件  </p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo nano /etc/rabbitmq/rabbitmq.conf</span><br></pre></td></tr></table></figure>
-<p>在文件中添加以下行，将端口号更改为 5673  </p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">监听端口</span></span><br><span class="line">listeners.tcp.port = 5673</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">管理界面端口</span></span><br><span class="line">management.tcp.port = 15673</span><br></pre></td></tr></table></figure>
-
-<p>通过以上步骤，您将在 Ubuntu 系统上安装并运行 RabbitMQ。</p>
-]]></content>
-      <categories>
-        <category>服务器部署</category>
-      </categories>
-      <tags>
-        <tag>ubuntu</tag>
-        <tag>rabbitMQ</tag>
       </tags>
   </entry>
   <entry>
