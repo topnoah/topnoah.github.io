@@ -320,6 +320,11 @@
 
 <h4 id="设置-RabbitMQ-的管理用户"><a href="#设置-RabbitMQ-的管理用户" class="headerlink" title="设置 RabbitMQ 的管理用户"></a>设置 RabbitMQ 的管理用户</h4><p>使用以下命令设置 RabbitMQ 的管理用户  </p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo rabbitmqctl add_user admin password</span><br></pre></td></tr></table></figure>
+<p>设置用户标签</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo rabbitmqctl set_user_tags admin administrator</span><br></pre></td></tr></table></figure>
+<p>设置权限</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo rabbitmqctl set_permissions -p / admin &quot;.*&quot; &quot;.*&quot; &quot;.*&quot;</span><br></pre></td></tr></table></figure>
+
 
 <h4 id="修改-RabbitMQ-端口号"><a href="#修改-RabbitMQ-端口号" class="headerlink" title="修改 RabbitMQ 端口号"></a>修改 RabbitMQ 端口号</h4><p>默认情况下，RabbitMQ 使用 5672 端口。如果需要更改端口号，请编辑配置文件  </p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo nano /etc/rabbitmq/rabbitmq.conf</span><br></pre></td></tr></table></figure>
