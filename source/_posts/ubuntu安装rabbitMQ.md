@@ -57,6 +57,13 @@ sudo systemctl start rabbitmq-server
 sudo systemctl status rabbitmq-server
 ```
 
+#### 启用RabbitMQ管理插件
+RabbitMQ提供了一个Web管理界面，可以通过以下命令启用：
+```shell
+sudo rabbitmq-plugins enable rabbitmq_management
+```
+
+
 #### 设置 RabbitMQ 的管理用户
 使用以下命令设置 RabbitMQ 的管理用户  
 ```shell
