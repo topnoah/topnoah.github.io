@@ -69,6 +69,15 @@ sudo rabbitmq-plugins enable rabbitmq_management
 ```shell
 sudo rabbitmqctl add_user admin password
 ```
+设置用户标签
+```shell
+sudo rabbitmqctl set_user_tags admin administrator
+```
+设置权限
+```shell
+sudo rabbitmqctl set_permissions -p / admin ".*" ".*" ".*"
+```
+
 
 #### 修改 RabbitMQ 端口号
 默认情况下，RabbitMQ 使用 5672 端口。如果需要更改端口号，请编辑配置文件  
