@@ -40,6 +40,49 @@
       </tags>
   </entry>
   <entry>
+    <title>ubuntu(debian) Apache2多端口部署</title>
+    <url>/2025/02/10/linux%E5%AE%89%E8%A3%85apache2/</url>
+    <content><![CDATA[<blockquote>
+<p>Linux Apache2多端口，多项目部署。</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="Linux-Apache2多端口部署"><a href="#Linux-Apache2多端口部署" class="headerlink" title="Linux Apache2多端口部署"></a>Linux Apache2多端口部署</h3><h4 id="安装Apache2"><a href="#安装Apache2" class="headerlink" title="安装Apache2"></a>安装Apache2</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install apache2</span><br></pre></td></tr></table></figure>
+
+<h4 id="找到ports-conf文件"><a href="#找到ports-conf文件" class="headerlink" title="找到ports.conf文件"></a>找到ports.conf文件</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /etc/apache2</span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">root@nine:~# cd /etc/apache2/</span><br><span class="line">root@nine:/etc/apache2# ls</span><br><span class="line">apache2.conf    conf-enabled  magic           mods-enabled  sites-available</span><br><span class="line">conf-available  envvars       mods-available  ports.conf    sites-enabled</span><br></pre></td></tr></table></figure>
+
+<h4 id="编辑ports-conf文件"><a href="#编辑ports-conf文件" class="headerlink" title="编辑ports.conf文件"></a>编辑ports.conf文件</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim ports.conf</span><br></pre></td></tr></table></figure>
+
+<h4 id="添加端口，如下"><a href="#添加端口，如下" class="headerlink" title="添加端口，如下"></a>添加端口，如下</h4><figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="comment"># If you just change the port or add more ports here, you will likely also</span></span><br><span class="line"><span class="comment"># have to change the VirtualHost statement in</span></span><br><span class="line"><span class="comment"># /etc/apache2/sites-enabled/000-default.conf</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sports-memory</span></span><br><span class="line"><span class="attribute">Listen</span> <span class="number">23106</span></span><br><span class="line"><span class="comment"># blog</span></span><br><span class="line"><span class="attribute">Listen</span> <span class="number">23107</span></span><br><span class="line"><span class="comment"># wprdpress</span></span><br><span class="line"><span class="attribute">Listen</span> <span class="number">23108</span></span><br><span class="line"></span><br><span class="line"><span class="section">&lt;IfModule ssl_module&gt;</span></span><br><span class="line">        <span class="attribute">Listen</span> <span class="number">443</span></span><br><span class="line"><span class="section">&lt;/IfModule&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="section">&lt;IfModule mod_gnutls.c&gt;</span></span><br><span class="line">        <span class="attribute">Listen</span> <span class="number">443</span></span><br><span class="line"><span class="section">&lt;/IfModule&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># vim: syntax=apache ts=4 sw=4 sts=4 sr noet</span></span><br><span class="line">~                                                                                                           ~     </span><br></pre></td></tr></table></figure>
+
+<p>添加后，保存退出（<code>:wq</code>）</p>
+<h4 id="添加站点（sites-available）"><a href="#添加站点（sites-available）" class="headerlink" title="添加站点（sites.available）"></a>添加站点（sites.available）</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd sites-available/</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">root@nine:/etc/apache2# cd sites-available/</span><br><span class="line">root@nine:/etc/apache2/sites-available# ls</span><br><span class="line">000-default.conf  default-ssl.conf</span><br></pre></td></tr></table></figure>
+
+<p>编辑站点</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim 000-default.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="section">&lt;VirtualHost *<span class="number">:23106</span>&gt;</span></span><br><span class="line">        <span class="attribute">ServerAdmin</span> webmaster@localhost</span><br><span class="line">        <span class="attribute">DocumentRoot</span> /var/www/html</span><br><span class="line">        <span class="attribute">ErrorLog</span> <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/error.log</span><br><span class="line">        <span class="attribute">CustomLog</span> <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/access.log combined</span><br><span class="line"><span class="section">&lt;/VirtualHost&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="section">&lt;VirtualHost *<span class="number">:23107</span>&gt;</span></span><br><span class="line">        <span class="attribute">ServerAdmin</span> webmaster2@localhost</span><br><span class="line">        <span class="attribute">DocumentRoot</span> /var/www/blog/dist</span><br><span class="line">        <span class="attribute">ErrorLog</span> <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/error.log</span><br><span class="line">        <span class="attribute">CustomLog</span> <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/access.log combined</span><br><span class="line"><span class="section">&lt;/VirtualHost&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="section">&lt;VirtualHost *<span class="number">:23108</span>&gt;</span></span><br><span class="line">        <span class="attribute">ServerAdmin</span> webmaster3@localhost</span><br><span class="line">        <span class="attribute">DocumentRoot</span> /var/www/wordpress</span><br><span class="line">        <span class="attribute">ErrorLog</span> <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/error.log</span><br><span class="line">        <span class="attribute">CustomLog</span> <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/access.log combined</span><br><span class="line"><span class="section">&lt;/VirtualHost&gt;</span></span><br></pre></td></tr></table></figure>
+<p>编辑完成后，保存退出（<code>:wq</code>）</p>
+<h4 id="重启Apache2服务"><a href="#重启Apache2服务" class="headerlink" title="重启Apache2服务"></a>重启Apache2服务</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">systemctl restart apache2</span><br></pre></td></tr></table></figure>
+
+<h4 id="卸载apache2"><a href="#卸载apache2" class="headerlink" title="卸载apache2"></a>卸载apache2</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">apt remove apache2</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>服务器部署</category>
+      </categories>
+      <tags>
+        <tag>ubuntu</tag>
+        <tag>debian</tag>
+        <tag>apache2</tag>
+        <tag>port</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Ubuntu安装Docker和docker-compose</title>
     <url>/2025/02/10/linux%E5%AE%89%E8%A3%85docker%E5%92%8Cdocker-compose/</url>
     <content><![CDATA[<blockquote>
@@ -138,49 +181,6 @@
         <tag>docker</tag>
         <tag>docker-compose</tag>
         <tag>Ubuntu</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ubuntu(debian) Apache2多端口部署</title>
-    <url>/2025/02/10/linux%E5%AE%89%E8%A3%85apache2/</url>
-    <content><![CDATA[<blockquote>
-<p>Linux Apache2多端口，多项目部署。</p>
-</blockquote>
-<span id="more"></span>
-
-<h3 id="Linux-Apache2多端口部署"><a href="#Linux-Apache2多端口部署" class="headerlink" title="Linux Apache2多端口部署"></a>Linux Apache2多端口部署</h3><h4 id="安装Apache2"><a href="#安装Apache2" class="headerlink" title="安装Apache2"></a>安装Apache2</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install apache2</span><br></pre></td></tr></table></figure>
-
-<h4 id="找到ports-conf文件"><a href="#找到ports-conf文件" class="headerlink" title="找到ports.conf文件"></a>找到ports.conf文件</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /etc/apache2</span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">root@nine:~# cd /etc/apache2/</span><br><span class="line">root@nine:/etc/apache2# ls</span><br><span class="line">apache2.conf    conf-enabled  magic           mods-enabled  sites-available</span><br><span class="line">conf-available  envvars       mods-available  ports.conf    sites-enabled</span><br></pre></td></tr></table></figure>
-
-<h4 id="编辑ports-conf文件"><a href="#编辑ports-conf文件" class="headerlink" title="编辑ports.conf文件"></a>编辑ports.conf文件</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim ports.conf</span><br></pre></td></tr></table></figure>
-
-<h4 id="添加端口，如下"><a href="#添加端口，如下" class="headerlink" title="添加端口，如下"></a>添加端口，如下</h4><figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="comment"># If you just change the port or add more ports here, you will likely also</span></span><br><span class="line"><span class="comment"># have to change the VirtualHost statement in</span></span><br><span class="line"><span class="comment"># /etc/apache2/sites-enabled/000-default.conf</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sports-memory</span></span><br><span class="line"><span class="attribute">Listen</span> <span class="number">23106</span></span><br><span class="line"><span class="comment"># blog</span></span><br><span class="line"><span class="attribute">Listen</span> <span class="number">23107</span></span><br><span class="line"><span class="comment"># wprdpress</span></span><br><span class="line"><span class="attribute">Listen</span> <span class="number">23108</span></span><br><span class="line"></span><br><span class="line"><span class="section">&lt;IfModule ssl_module&gt;</span></span><br><span class="line">        <span class="attribute">Listen</span> <span class="number">443</span></span><br><span class="line"><span class="section">&lt;/IfModule&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="section">&lt;IfModule mod_gnutls.c&gt;</span></span><br><span class="line">        <span class="attribute">Listen</span> <span class="number">443</span></span><br><span class="line"><span class="section">&lt;/IfModule&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># vim: syntax=apache ts=4 sw=4 sts=4 sr noet</span></span><br><span class="line">~                                                                                                           ~     </span><br></pre></td></tr></table></figure>
-
-<p>添加后，保存退出（<code>:wq</code>）</p>
-<h4 id="添加站点（sites-available）"><a href="#添加站点（sites-available）" class="headerlink" title="添加站点（sites.available）"></a>添加站点（sites.available）</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd sites-available/</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">root@nine:/etc/apache2# cd sites-available/</span><br><span class="line">root@nine:/etc/apache2/sites-available# ls</span><br><span class="line">000-default.conf  default-ssl.conf</span><br></pre></td></tr></table></figure>
-
-<p>编辑站点</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim 000-default.conf</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="section">&lt;VirtualHost *<span class="number">:23106</span>&gt;</span></span><br><span class="line">        <span class="attribute">ServerAdmin</span> webmaster@localhost</span><br><span class="line">        <span class="attribute">DocumentRoot</span> /var/www/html</span><br><span class="line">        <span class="attribute">ErrorLog</span> <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/error.log</span><br><span class="line">        <span class="attribute">CustomLog</span> <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/access.log combined</span><br><span class="line"><span class="section">&lt;/VirtualHost&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="section">&lt;VirtualHost *<span class="number">:23107</span>&gt;</span></span><br><span class="line">        <span class="attribute">ServerAdmin</span> webmaster2@localhost</span><br><span class="line">        <span class="attribute">DocumentRoot</span> /var/www/blog/dist</span><br><span class="line">        <span class="attribute">ErrorLog</span> <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/error.log</span><br><span class="line">        <span class="attribute">CustomLog</span> <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/access.log combined</span><br><span class="line"><span class="section">&lt;/VirtualHost&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="section">&lt;VirtualHost *<span class="number">:23108</span>&gt;</span></span><br><span class="line">        <span class="attribute">ServerAdmin</span> webmaster3@localhost</span><br><span class="line">        <span class="attribute">DocumentRoot</span> /var/www/wordpress</span><br><span class="line">        <span class="attribute">ErrorLog</span> <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/error.log</span><br><span class="line">        <span class="attribute">CustomLog</span> <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/access.log combined</span><br><span class="line"><span class="section">&lt;/VirtualHost&gt;</span></span><br></pre></td></tr></table></figure>
-<p>编辑完成后，保存退出（<code>:wq</code>）</p>
-<h4 id="重启Apache2服务"><a href="#重启Apache2服务" class="headerlink" title="重启Apache2服务"></a>重启Apache2服务</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">systemctl restart apache2</span><br></pre></td></tr></table></figure>
-
-<h4 id="卸载apache2"><a href="#卸载apache2" class="headerlink" title="卸载apache2"></a>卸载apache2</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">apt remove apache2</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>服务器部署</category>
-      </categories>
-      <tags>
-        <tag>ubuntu</tag>
-        <tag>debian</tag>
-        <tag>apache2</tag>
-        <tag>port</tag>
       </tags>
   </entry>
   <entry>
@@ -313,6 +313,10 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl enable rabbitmq-server</span><br><span class="line">sudo systemctl start rabbitmq-server</span><br></pre></td></tr></table></figure>
 
 <h4 id="检查-RabbitMQ-的状态"><a href="#检查-RabbitMQ-的状态" class="headerlink" title="检查 RabbitMQ 的状态"></a>检查 RabbitMQ 的状态</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl status rabbitmq-server</span><br></pre></td></tr></table></figure>
+
+<h4 id="启用RabbitMQ管理插件"><a href="#启用RabbitMQ管理插件" class="headerlink" title="启用RabbitMQ管理插件"></a>启用RabbitMQ管理插件</h4><p>RabbitMQ提供了一个Web管理界面，可以通过以下命令启用：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo rabbitmq-plugins enable rabbitmq_management</span><br></pre></td></tr></table></figure>
+
 
 <h4 id="设置-RabbitMQ-的管理用户"><a href="#设置-RabbitMQ-的管理用户" class="headerlink" title="设置 RabbitMQ 的管理用户"></a>设置 RabbitMQ 的管理用户</h4><p>使用以下命令设置 RabbitMQ 的管理用户  </p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo rabbitmqctl add_user admin password</span><br></pre></td></tr></table></figure>
